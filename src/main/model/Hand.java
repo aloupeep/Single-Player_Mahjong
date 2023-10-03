@@ -3,6 +3,8 @@ package model;
 import java.util.ArrayList;
 
 // Represents the current hand (list of currently kept tiles) of the player
+// Note: a hand never exceeds 14 tiles, so you never draws a new tile or discards
+// a tile twice in a row no matter what the situation is.
 public class Hand {
 
 
@@ -37,12 +39,6 @@ public class Hand {
 
     }
 
-    // Requires: APPROPRIATE USER INPUTS (expand on that later!)
-    // Effects: returns true if the declaration of win is valid
-    public Boolean declareWin() {
-        return false; // stub
-    }
-
     public ArrayList<Tile> getHand() {
         return null; // stub
     }
@@ -54,6 +50,11 @@ public class Hand {
     // Effects: returns a random tile
     private Tile produceRandomTile() {
         return null; // stub
+    }
+
+    // Effects: returns true if hand is sorted; false otherwise
+    public Boolean isSorted() {
+        return true; // stub
     }
 
 
