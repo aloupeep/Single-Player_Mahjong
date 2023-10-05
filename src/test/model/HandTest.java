@@ -18,12 +18,14 @@ class HandTest {
 
     @BeforeEach
     public void setup() {
-        testHand1 = new Hand();
-        testHand2 = new Hand();
         testTile1 = new Tile(0);
         testTile2 = new Tile(33);
         testHand1 = new Hand();
         testHand2 = new Hand();
+        testHandComplete1 = new Hand();
+        testHandComplete2 = new Hand();
+        handList1 = new ArrayList<>();
+        handList2 = new ArrayList<>();
         testHandComplete1.drawTile(testTile1);
         testHandComplete2.drawTile(testTile2);
         handList1 = testHandComplete1.getHand();
