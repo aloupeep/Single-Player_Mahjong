@@ -17,7 +17,7 @@ public class DiscardedTiles {
     }
 
     // Effects: returns the list of previously discarded tiles
-    public ArrayList<Tile> getDiscardedTile() {
+    public ArrayList<Tile> getDiscardedTiles() {
         return null; // stub
     }
 
