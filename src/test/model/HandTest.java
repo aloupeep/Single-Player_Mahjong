@@ -3,7 +3,10 @@ package model;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.HashSet;
 
+import static model.Tile.MAX_ID;
 import static org.junit.jupiter.api.Assertions.*;
 
 class HandTest {
@@ -11,8 +14,8 @@ class HandTest {
     Hand testHandComplete1;
     Hand testHand2;
     Hand testHandComplete2;
-    ArrayList<Tile> handList1;
-    ArrayList<Tile> handList2;
+    List<Tile> handList1;
+    List<Tile> handList2;
     Tile testTile1;
     Tile testTile2;
 
@@ -35,7 +38,7 @@ class HandTest {
     @Test
     public void testConstructor() {
         assertEquals(13, testHand1.getHandLength());
-        assertEquals(13, testHand1.getHandLength());
+        assertEquals(13, testHand2.getHandLength());
     }
 
     @Test
@@ -48,22 +51,30 @@ class HandTest {
 
     @Test
     public void testDiscardTileOnce() {
-        testHand1.discardTile(testTile1);
-        testHand2.discardTile(testTile2);
-        assertEquals(13, testHand1.getHandLength());
-        assertEquals(13, testHand2.getHandLength());
+        assertTrue(testHandComplete1.discardTile(testTile1));
+        assertTrue(testHandComplete2.discardTile(testTile2));
+        assertEquals(13, testHandComplete1.getHandLength());
+        assertEquals(13, testHandComplete2.getHandLength());
+    }
+    @Test
+    public void testDiscardTileFailed() {
+        for (Tile tile: handList1) {
+            assertFalse(testHandComplete1.discardTile(tile));
+        }
+        assertEquals(0, testHandComplete1.getHandLength());
     }
 
     @Test
     public void testDrawDiscardMultiple() {
-        testHand1.discardTile(testTile1);
-        testHand2.discardTile(testTile2);
+
+        testHandComplete1.discardTile(testTile1);
+        testHandComplete2.discardTile(testTile2);
         testHandComplete1.drawTile(testTile2);
         testHandComplete2.drawTile(testTile1);
-        testHand1.discardTile(testTile2);
-        testHand2.discardTile(testTile1);
-        assertEquals(13, testHand1.getHandLength());
-        assertEquals(13, testHand2.getHandLength());
+        testHandComplete1.discardTile(testTile2);
+        testHandComplete2.discardTile(testTile1);
+        assertEquals(13, testHandComplete1.getHandLength());
+        assertEquals(13, testHandComplete2.getHandLength());
     }
 
     @Test
@@ -78,5 +89,19 @@ class HandTest {
         assertTrue(testHandComplete1.isSorted());
         assertTrue(testHandComplete2.isSorted());
     }
+
+    @Test
+    public void testProduceRandomTileMultiple() {
+        HashSet<Integer> testSet = new HashSet<>();
+        for (int count = 1; count <= 100; count++) {
+            int randomID = testHand1.produceRandomID();
+            testSet.add(randomID);
+            if ((randomID < 0) || (randomID > MAX_ID)) {
+                fail();
+                }
+            }
+        assertTrue((testSet.size() > 3));
+    }
+
 
 }
