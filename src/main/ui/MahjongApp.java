@@ -69,29 +69,39 @@ public class MahjongApp {
         }
     }
 
-    private Boolean checkTriple(int ID1, int ID2, int ID3) {
+    public Boolean checkTriple(int ID1, int ID2, int ID3) {
         Tile tile1 = new Tile(ID1);
         Tile tile2 = new Tile(ID2);
         Tile tile3 = new Tile(ID3);
         Boolean isSuccess = true;
         if (!((tile2.getNumber() == tile1.getNumber()) && (tile1.getNumber() == tile3.getNumber()))) {
             isSuccess = false;
-        } else if ((handList.contains(tile1)) && (handList.contains(tile2)) && (handList.contains(tile1))) {
+        } else if (handList.contains(tile1)) {
             handList.remove(tile1);
-            handList.remove(tile2);
-            handList.remove(tile3); /// if contain, remove(if contain, remove, else handlist.add), else false ...
+            if (handList.contains(tile2)) {
+                handList.remove(tile2);
+                if (handList.contains(tile3)) {
+                    handList.remove(tile3);
+                } else {
+                    isSuccess = false;
+                    handList.add(tile1);
+                    handList.add(tile2);
+                }
+            } else {
+                isSuccess = false;
+                handList.add(tile2);
+            }
         } else {
             isSuccess = false;
         }
         return isSuccess;
-
     }
 
 
     // Requires: ID1, ID2, and ID3 are in [0, MAX_ID (from tile class)]
     // Modifies: this
     // Effects: return true if the sequence is valid and is in the current hand
-    private Boolean checkSequence(int ID1, int ID2, int ID3) {
+    public Boolean checkSequence(int ID1, int ID2, int ID3) {
         Tile tile1 = new Tile(ID1);
         Tile tile2 = new Tile(ID2);
         Tile tile3 = new Tile(ID3);
@@ -113,7 +123,7 @@ public class MahjongApp {
     // Modifies: this
     // Effects: prints the current hand as a list of strings
     public void showHand(List<Tile> hand) {
-        handVisual = new ArrayList<String>()
+        handVisual = new ArrayList<String>();
         for (Tile tile: hand) {
             handVisual.add(tile.showTile());
         }
