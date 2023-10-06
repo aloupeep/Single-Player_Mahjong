@@ -32,8 +32,8 @@ public class Hand {
     // THIS IS THE METHOD IF I'M ACTUALLY PLANNING TO BUILD A WALL!! BEWARE
     // Modifies: this
     // Effects: incorporates given tile into current hand
-    public void drawTileFromWall(Tile tile) {
-    }
+    // public void drawTileFromWall(Tile tile) {
+    //  }
 
     // Modifies: this
     // Effects: If the given tile is in the hand, remove the discarded tile from the hand and produce true.
@@ -49,9 +49,8 @@ public class Hand {
 
     // Modifies: this
     // Effects: reorders the sequence of the tiles in the current hand to make it sorted
-    public void sortHand() {
-
-    }
+    // public void sortHand() {
+    // }
 
     // Requires: the current hand is sorted (except for the last tile added)
     // Modifies: this

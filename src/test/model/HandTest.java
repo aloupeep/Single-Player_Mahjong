@@ -9,6 +9,7 @@ import java.util.HashSet;
 import static model.Tile.MAX_ID;
 import static org.junit.jupiter.api.Assertions.*;
 
+// NEED TO ADD ONE MORE TEST WHERE THE isSORTED FAILS!!!
 class HandTest {
     Hand testHand1;
     Hand testHandComplete1;
@@ -109,6 +110,15 @@ class HandTest {
                 }
             }
         assertTrue((testSet.size() > 3));
+    }
+
+    @Test
+    public void testIsSortedFail() {
+        testHand1.drawTile(testTile1);
+        testHand2.drawTile(new Tile(1));
+        assertFalse(testHand1.isSorted());
+        // note: not considering super small events like all 13 tiles being
+        // 0 or 1
     }
 
 
