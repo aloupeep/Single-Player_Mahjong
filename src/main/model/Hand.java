@@ -13,11 +13,12 @@ public class Hand {
     List<Tile> currentHand;
 
 
-    // Effects: creates a starting hand with 13 tiles
+    // Effects: creates a starting hand with 13 tiles and sorts
     public Hand() {
         currentHand = new ArrayList<>();
         for (int count = 1; count <= 13; count++) {
             this.drawTile(new Tile(this.produceRandomID()));
+            this.sortHandLastTile();
         }
     }
 
@@ -47,9 +48,32 @@ public class Hand {
     }
 
     // Modifies: this
-    // Effects: reorder the sequence of the tiles in the hand to make it sorted
+    // Effects: reorders the sequence of the tiles in the current hand to make it sorted
     public void sortHand() {
 
+    }
+
+    // Requires: the current hand is sorted (except for the last tile added)
+    // Modifies: this
+    // Effects: inserts the last tile of the current hand to the correct place
+    public void sortHandLastTile() {
+        int index = currentHand.size() - 1;
+        Tile lastTile = currentHand.get(index);
+        int lastID = lastTile.getID();
+        boolean isInserted = true;
+        List<Tile> newHand = new ArrayList<>();
+        currentHand.remove(lastTile);
+        for (Tile tile: currentHand) {
+            if ((isInserted) && (lastID <= tile.getID())) {
+                newHand.add(lastTile);
+                isInserted = false;
+            }
+            newHand.add(tile);
+        }
+        if (isInserted) {
+            newHand.add(lastTile);
+        }
+        currentHand = newHand;
     }
 
     public List<Tile> getHand() {
@@ -62,12 +86,19 @@ public class Hand {
 
     // Effects: returns true if hand is sorted; false otherwise
     public Boolean isSorted() {
-        return true; // stub
+        int lowID = 0;
+        for (Tile tile: currentHand) {
+            if (tile.getID() < lowID) {
+                return false;
+            }
+            lowID = tile.getID();
+        }
+        return true;
     }
 
     // Effects: returns a random integer between 0 and MAX_ID
     public int produceRandomID() {
-        Random randid = new Random();
-        return randid.nextInt(MAX_ID + 1); // stub
+        Random randID = new Random();
+        return randID.nextInt(MAX_ID + 1); // stub
     }
 }

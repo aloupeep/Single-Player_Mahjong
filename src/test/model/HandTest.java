@@ -27,8 +27,6 @@ class HandTest {
         testHand2 = new Hand();
         testHandComplete1 = new Hand();
         testHandComplete2 = new Hand();
-        handList1 = new ArrayList<>();
-        handList2 = new ArrayList<>();
         testHandComplete1.drawTile(testTile1);
         testHandComplete2.drawTile(testTile2);
         handList1 = testHandComplete1.getHand();
@@ -39,6 +37,10 @@ class HandTest {
     public void testConstructor() {
         assertEquals(13, testHand1.getHandLength());
         assertEquals(13, testHand2.getHandLength());
+
+        assertTrue(testHand1.isSorted());
+        assertTrue(testHand2.isSorted());
+
     }
 
     @Test
@@ -58,36 +60,42 @@ class HandTest {
     }
     @Test
     public void testDiscardTileFailed() {
-        for (Tile tile: handList1) {
-            assertFalse(testHandComplete1.discardTile(tile));
+        if (!(handList1.contains(new Tile(7)))) {
+            assertFalse(testHandComplete1.discardTile(new Tile(7)));
+        } else {
+            assertTrue(testHandComplete1.discardTile(new Tile(7)));
         }
-        assertEquals(0, testHandComplete1.getHandLength());
+
+        if (!(handList2.contains(testTile1))) {
+            assertFalse(testHandComplete1.discardTile(testTile2));
+        } else {
+            assertTrue(testHandComplete2.discardTile(testTile1));
+        }
+
     }
 
     @Test
     public void testDrawDiscardMultiple() {
 
-        testHandComplete1.discardTile(testTile1);
-        testHandComplete2.discardTile(testTile2);
+        assertTrue(testHandComplete1.discardTile(testTile1));
+        assertTrue(testHandComplete2.discardTile(testTile2));
         testHandComplete1.drawTile(testTile2);
         testHandComplete2.drawTile(testTile1);
-        testHandComplete1.discardTile(testTile2);
-        testHandComplete2.discardTile(testTile1);
+        assertTrue(testHandComplete1.discardTile(testTile2));
+        assertTrue(testHandComplete2.discardTile(testTile1));
         assertEquals(13, testHandComplete1.getHandLength());
         assertEquals(13, testHandComplete2.getHandLength());
     }
 
     @Test
-    public void testSortHandMultiple() {
-        testHand1.sortHand();
-        testHand2.sortHand();
-        testHandComplete1.sortHand();
-        testHandComplete2.sortHand();
+    public void testSortHandLastTileMultiple() {
+        testHandComplete1.sortHandLastTile();
+        testHandComplete2.sortHandLastTile();
 
-        assertTrue(testHand1.isSorted());
-        assertTrue(testHand2.isSorted());
         assertTrue(testHandComplete1.isSorted());
         assertTrue(testHandComplete2.isSorted());
+        assertEquals(14,testHandComplete1.getHandLength());
+        assertEquals(14,testHandComplete2.getHandLength());
     }
 
     @Test

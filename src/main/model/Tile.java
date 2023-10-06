@@ -3,9 +3,9 @@ package model;
 // Represents a mahjong tile having an ID,
 // a number, and a suit (type)
 public class Tile {
-    private int id;
-    private int number;
-    private String suit;
+    private final int id;
+    private final int number;
+    private final String suit;
     public static final int MAX_ID = 33;
 
 
@@ -14,10 +14,19 @@ public class Tile {
     public Tile(int id) {
         this.id = id;
         if (id >= 31) {
-            this.number = id % 3 + 1;
-            this.suit = "honour";
+            this.number = id % 10;
+            this.suit = "dragon";
         } else {
             this.number = id % 9 + 1;
+            if (id / 9 == 0) {
+                this.suit = "man";
+            } else if (id / 9 == 1) {
+                this.suit = "pin";
+            } else if (id / 9 == 2) {
+                this.suit = "sou";
+            } else {
+                this.suit = "wind";
+            }
         }
     }
 
