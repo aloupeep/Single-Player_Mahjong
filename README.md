@@ -26,10 +26,14 @@ attempt to capture the multiplayer aspect of mahjong, hence my proposal of a sin
 and draw one tile at the beginning of each turn
 - As a user, I want to be able to discard one tile in my hand and add it to a list of previously 
 discarded tiles of arbitrary size after drawing one tile to end the current turn
-- As a user, I want to be able to view the list of previously discarded tiles at any time.
-- As a user, I want to be able to view my current hand at any times
+- As a user, I want to be able to view the list of previously discarded tiles just before I
+discard a tile.
+- As a user, I want to be able to view my current hand when I'm declaring a win or
+drawing/discarding a tile.
 - As a user, I want to be able to declare that the hand is completed manually/automatically
   (depending on how capable I am of implementing the code for automatic checking)
+
+FOR PHASE TWO
 - As a user, I want to be able to start a new game by replacing it with the current game.
 - As a user, I want to be able to start a new game after completing a hand.
 - As a user, I want to be able to close and save a game at any time to come back to it later

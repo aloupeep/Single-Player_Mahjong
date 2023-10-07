@@ -7,7 +7,7 @@ import java.util.Random;
 import static model.Tile.MAX_ID;
 
 // Represents the current hand (list of currently kept tiles) of the player
-// Note: a hand never exceeds 14 tiles, so you never draws a new tile or discards
+// Note: a hand is always between 13 and 14 tiles, so you never draw a new tile or discards
 // a tile twice in a row no matter what the situation is.
 public class Hand {
     List<Tile> currentHand;
@@ -45,6 +45,13 @@ public class Hand {
         } else {
             return false;
         }
+    }
+
+    // Modifies: this
+    // Effects: If the given tile is in the hand, remove the discarded tile from the hand and produce true.
+    //          Otherwise, do nothing to the hand and produce false
+    public Tile discardTileIndex(int index) {
+        return currentHand.remove(index);
     }
 
     // Modifies: this

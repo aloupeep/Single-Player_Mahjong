@@ -89,6 +89,24 @@ class HandTest {
     }
 
     @Test
+    public void testDrawDiscardIndexMultiple() {
+
+        testHandComplete1.discardTileIndex(13);
+        testHandComplete2.discardTileIndex(13);
+        testHandComplete1.drawTile(testTile2);
+        testHandComplete2.drawTile(testTile1);
+        testHandComplete1.discardTileIndex(0);
+        testHandComplete2.discardTileIndex(0);
+        testHandComplete1.drawTile(testTile2);
+        testHandComplete2.drawTile(testTile1);
+        testHandComplete1.discardTileIndex(5);
+        testHandComplete2.discardTileIndex(5);
+        assertEquals(13, testHandComplete1.getHandLength());
+        assertEquals(13, testHandComplete2.getHandLength());
+    }
+
+
+    @Test
     public void testSortHandLastTileMultiple() {
         testHandComplete1.sortHandLastTile();
         testHandComplete2.sortHandLastTile();
