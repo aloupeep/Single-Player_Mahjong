@@ -69,10 +69,13 @@ public class MahjongApp {
         }
     }
 
-    public Boolean checkTriple(int ID1, int ID2, int ID3) {
-        Tile tile1 = new Tile(ID1);
-        Tile tile2 = new Tile(ID2);
-        Tile tile3 = new Tile(ID3);
+    // Requires: id1, id2, and id3 are in [0, MAX_ID (from tile class)]
+    // Modifies: this
+    // Effects: return true if the triple is valid and is in the current hand
+    private Boolean checkTriple(int id1, int id2, int id3) {
+        Tile tile1 = new Tile(id1);
+        Tile tile2 = new Tile(id2);
+        Tile tile3 = new Tile(id3);
         Boolean isSuccess = true;
         if (!((tile2.getNumber() == tile1.getNumber()) && (tile1.getNumber() == tile3.getNumber()))) {
             isSuccess = false;
@@ -83,13 +86,10 @@ public class MahjongApp {
                 if (handList.contains(tile3)) {
                     handList.remove(tile3);
                 } else {
-                    isSuccess = false;
-                    handList.add(tile1);
-                    handList.add(tile2);
+                    isSuccess = addTilesBack(tile1,2);
                 }
             } else {
-                isSuccess = false;
-                handList.add(tile2);
+                isSuccess = addTilesBack(tile1,1);
             }
         } else {
             isSuccess = false;
@@ -97,14 +97,21 @@ public class MahjongApp {
         return isSuccess;
     }
 
+    private Boolean addTilesBack(Tile tile, int n) {
+        for (int count = 1; count <= n; count++) {
+            handList.add(tile);
+        }
+        return false;
+    }
 
-    // Requires: ID1, ID2, and ID3 are in [0, MAX_ID (from tile class)]
+
+    // Requires: id1, id2, and id3 are in [0, MAX_ID (from tile class)]
     // Modifies: this
     // Effects: return true if the sequence is valid and is in the current hand
-    public Boolean checkSequence(int ID1, int ID2, int ID3) {
-        Tile tile1 = new Tile(ID1);
-        Tile tile2 = new Tile(ID2);
-        Tile tile3 = new Tile(ID3);
+    public Boolean checkSequence(int id1, int id2, int id3) {
+        Tile tile1 = new Tile(id1);
+        Tile tile2 = new Tile(id2);
+        Tile tile3 = new Tile(id3);
         Boolean isSuccess = true;
         if (!((tile2.getNumber() - tile1.getNumber() == 1) && (tile3.getNumber() - tile2.getNumber() == 1))) {
             isSuccess = false;
@@ -116,6 +123,11 @@ public class MahjongApp {
             isSuccess = false;
         }
         return isSuccess;
+    }
+
+    public Boolean checkPair() {
+        System.out.println();
+        return false;
     }
 
 
