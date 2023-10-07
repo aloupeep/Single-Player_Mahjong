@@ -48,10 +48,9 @@ public class Hand {
     }
 
     // Modifies: this
-    // Effects: If the given tile is in the hand, remove the discarded tile from the hand and produce true.
-    //          Otherwise, do nothing to the hand and produce false
-    public Tile discardTileIndex(int index) {
-        return currentHand.remove(index);
+    // Effects: discards the tile at index of ind of the current hand
+    public Tile discardTileIndex(int ind) {
+        return currentHand.remove(ind);
     }
 
     // Modifies: this

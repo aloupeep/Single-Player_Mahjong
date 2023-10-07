@@ -16,6 +16,8 @@ public class MahjongApp {
     DiscardedTiles discards = new DiscardedTiles();
     String tileIdGuide = "1 man = 0, 1 pin = 9, 1 sou = 18, 1 wind = 27, 1 dragon = 31";
 
+    // Requires: User inputs a Boolean
+    // Effects: Creates MahjongApp instance and begins new mahjong game
     public MahjongApp() {
         scanner = new Scanner(System.in);
         scanner.useDelimiter("\n");
@@ -41,6 +43,8 @@ public class MahjongApp {
         }
     }
 
+    // Modifies: this
+    // Effects: resets the idList to match with the handList
     private void resetIdList() {
         idList = new ArrayList<>();
         for (Tile tile: handList) {
@@ -95,7 +99,8 @@ public class MahjongApp {
         return ((triples == 4) && (pairs == 1));
     }
 
-    // Requires: user inputs integers
+    // Requires: user inputs integers in the range [0,MAX_ID (from tile class)] for tileID1 and 2 and 3
+    //           AND user inputs a string for tripleType
     // Modifies: this
     // Effects: returns true if user inputs a valid triple that is in the handList
     private Boolean checkThree() {
@@ -103,13 +108,13 @@ public class MahjongApp {
         String tripleType = scanner.next();
         System.out.println("Type first, second, and third tiles' ID in increasing order (separated by line break)");
         System.out.println(tileIdGuide);
-        int tile1 = scanner.nextInt();
-        int tile2 = scanner.nextInt();
-        int tile3 = scanner.nextInt();
+        int tileID1 = scanner.nextInt();
+        int tileID2 = scanner.nextInt();
+        int tileID3 = scanner.nextInt();
         if (tripleType.equals("sequence")) {
-            return checkSequence(tile1,tile2,tile3);
+            return checkSequence(tileID1,tileID2,tileID3);
         } else if (tripleType.equals("triple")) {
-            return checkTriple(tile1,tile2,tile3);
+            return checkTriple(tileID1,tileID2,tileID3);
         } else {
             System.out.println("You did not input sequence or triple! Try again");
             return false;
@@ -142,6 +147,9 @@ public class MahjongApp {
         return isSuccess;
     }
 
+    // Requires: tile is not null
+    // Modifies: this
+    // Effects: restores the original state of the idList by repeatedly adding tile
     private Boolean addTilesBack(int tile, int n) {
         for (int count = 1; count <= n; count++) {
             idList.add(tile);
@@ -153,7 +161,7 @@ public class MahjongApp {
     // Requires: tileID1, tileID2, tileID3 are within [0,MAX_ID (from tile class)]
     // Modifies: this
     // Effects: return true if the sequence is valid and is in the current hand
-    public Boolean checkSequence(int tileID1, int tileID2, int tileID3) {
+    private Boolean checkSequence(int tileID1, int tileID2, int tileID3) {
         boolean isSuccess = true;
         if (!((tileID2 - tileID1 == 1) && (tileID3 - tileID2 == 1))) {
             isSuccess = false;
@@ -169,6 +177,9 @@ public class MahjongApp {
         return isSuccess;
     }
 
+    // Requires: user inputs integers within [0,MAX_ID (from tile class)] for tileID1 and 2
+    // Modifies: this
+    // Effects: return true if the sequence is valid and is in the current hand
     private Boolean checkPair() {
         System.out.println("Type first tile in ID form; " + tileIdGuide);
         int tileID1 = scanner.nextInt();
@@ -195,7 +206,7 @@ public class MahjongApp {
     }
 
     // Modifies: this
-    // Effects: prints the current hand as a list of strings
+    // Effects: prints the current hand (in ID form) as a list of strings
     public void showHandInt(List<Integer> hand) {
         handVisual = new ArrayList<String>();
         for (int tileID: hand) {
@@ -205,6 +216,8 @@ public class MahjongApp {
         System.out.println(handVisual);
     }
 
+    // Modifies: this
+    // Effects: prints the current hand (in tile form) as a list of strings
     public void showHand(List<Tile> hand) {
         handVisual = new ArrayList<String>();
         for (Tile tile: hand) {
