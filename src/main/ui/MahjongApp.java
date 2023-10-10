@@ -23,24 +23,57 @@ public class MahjongApp {
         scanner.useDelimiter("\n");
         hand = new Hand();
         while (isPlaying) {
-            hand.drawTile(new Tile(hand.produceRandomID()));
-            hand.sortHandLastTile();
-            resetHandList();
-            showHand(hand.getHand());
-            System.out.println("Do you want to declare win? (true/false)");
-            boolean win = scanner.nextBoolean();
-            resetIdList();
-            if (win) {
-                if (declareWin()) {
-                    System.out.println("You won!");
-                    break;
-                }
+            handDrawTileAndSort();
+
+            handleInput();
+
+        }
+    }
+
+
+
+    // Modifies: this
+    // Effects: draws a random tile, sorts the resulting hand, and shows the hand
+    private void handDrawTileAndSort() {
+        hand.drawTile(new Tile(hand.produceRandomID()));
+        hand.sortHandLastTile();
+        resetHandList();
+        showHand(hand.getHand());
+    }
+
+    // Modifies: this
+    // Effects: declares win, display discarded tiles, display current hand, or discards tile based on the user's inputs
+    private void handleInput() {
+        displayCommands();
+        String command = scanner.next();
+        resetIdList();
+        if (command.equals("w")) {
+            if (declareWin()) {
+                isPlaying = false;
+                return;
             }
+        } else if (command.equals("sd")) {
             System.out.println("Discarded Tiles:");
             showHand(discards.getDiscardedTiles());
+        } else if (command.equals("h")) {
+            System.out.println("Current Hand:");
             showHand(handList);
+        } else if (command.equals("d")) {
             discardTileFromHand();
+            return;
+        } else {
+            System.out.println("You did not input one of the keywords! Please try again.");
         }
+        handleInput();
+    }
+
+    // Effects: displays a list of different valid user commands
+    private void displayCommands() {
+        System.out.println("\nValid commands are:");
+        System.out.println("\tw -> declares win");
+        System.out.println("\tsd -> shows a list of previously discarded tiles");
+        System.out.println("\th -> shows your current hand");
+        System.out.println("\td -> discards a tile in your hand and end the turn");
     }
 
     // Modifies: this
