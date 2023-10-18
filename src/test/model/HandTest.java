@@ -135,7 +135,7 @@ class HandTest {
         testHand1.drawTile(testTile1);
         testHand2.drawTile(new Tile(1));
         assertFalse(testHand1.isSorted());
-        // note: not considering super small events like all 13 tiles being
+        // note: not considering super small events like all 13 tiles having ID of
         // 0 or 1
     }
 

@@ -1,14 +1,20 @@
 package ui;
 
 import model.*;
+import persistence.JsonReader;
+import persistence.JsonWriter;
 
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+// Represents an ongoing single-player mahjong game
+// Citation for this class: JsonSerializationDemo project mentioned in the phase 2 instructions; used it as reference
 public class MahjongApp {
     List<String> handVisual;
     Scanner scanner;
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
     Hand hand;
     List<Tile> handList;
     List<Integer> idList;

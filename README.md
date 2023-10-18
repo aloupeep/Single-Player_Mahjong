@@ -30,5 +30,8 @@ discarded tiles of arbitrary size after drawing one tile to end the current turn
 - As a user, I want to be able to view my current hand when I'm declaring a win or
 drawing/discarding a tile.
 - As a user, I want to be able to declare that the hand is completed manually.
+- As a user, I want to be able to close and save a game at any time to come back to it later
+- As a user, I want to be able to reload a previous game when starting the mahjong application
+
 
 
