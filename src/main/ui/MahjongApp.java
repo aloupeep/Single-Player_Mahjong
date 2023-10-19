@@ -93,8 +93,6 @@ public class MahjongApp {
         }
     }
 
-
-
     // MODIFIES: this
     // EFFECTS: loads workroom from file
     private void loadGame() {
@@ -148,15 +146,6 @@ public class MahjongApp {
         System.out.println("\th -> shows your current hand");
         System.out.println("\td -> discards a tile in your hand and end the turn");
         System.out.println("\te -> exits the game (and can choose to save it)");
-    }
-
-    // Modifies: this
-    // Effects: resets the idList to match with the handList
-    private void resetIdList() {
-        idList = new ArrayList<>();
-        for (Tile tile: handList) {
-            idList.add(tile.getID());
-        }
     }
 
     // Requires: user inputs an integer within [0, MAX_ID (from tile class)]
@@ -308,9 +297,7 @@ public class MahjongApp {
         return isSuccess;
     }
 
-    private void resetHandList() {
-        handList = hand.getHand();
-    }
+
 
     // Modifies: this
     // Effects: prints the current hand (in ID form) as a list of strings
@@ -332,7 +319,21 @@ public class MahjongApp {
         }
         System.out.println(" ");
         System.out.println(handVisual);
+    }
 
+    // Modifies: this
+    // Effects: resets the idList to match with the handList
+    private void resetIdList() {
+        idList = new ArrayList<>();
+        for (Tile tile: handList) {
+            idList.add(tile.getID());
+        }
+    }
+
+    // Modifies: this
+    // Effects: rest the handList to match with the current hand
+    private void resetHandList() {
+        handList = hand.getHand();
     }
 
 

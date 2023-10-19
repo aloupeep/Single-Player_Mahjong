@@ -33,7 +33,7 @@ public class JsonReader {
         return parseHand(jsonObject);
     }
 
-    // EFFECTS: reads hand from file and returns it;
+    // EFFECTS: reads discarded tiles from file and returns it;
     // throws IOException if an error occurs reading data from file
     public DiscardedTiles readDiscards() throws IOException {
         String jsonData = readFile(source);

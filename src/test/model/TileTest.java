@@ -1,5 +1,6 @@
 package model;
 
+import org.json.JSONObject;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -50,4 +51,26 @@ public class TileTest {
         assertEquals("2 wind", testTile4.showTile());
         assertEquals("3 dragon", testTile5.showTile());
     }
+
+    @Test
+    public void testToJson() {
+        JSONObject tile5Json = testTile5.toJson();
+        int jsonID = tile5Json.getInt("id");
+        assertEquals(33,jsonID);
+    }
+
+    @Test
+    public void testToJsonMultiple() {
+        int tile1JsonId = testTile1.toJson().getInt("id");
+        int tile3JsonId = testTile3.toJson().getInt("id");
+        int tile5JsonId = testTile5.toJson().getInt("id");
+
+        assertEquals(testTile1.getID(), tile1JsonId);
+        assertEquals(testTile3.getID(), tile3JsonId);
+        assertEquals(testTile5.getID(), tile5JsonId);
+
+
+
+    }
+
 }
