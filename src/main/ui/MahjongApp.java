@@ -31,12 +31,10 @@ public class MahjongApp {
         while (isPlaying) {
             handDrawTileAndSort();
 
-            handleInput();
+            promptInput();
 
         }
     }
-
-
 
     // Modifies: this
     // Effects: draws a random tile, sorts the resulting hand, and shows the hand
@@ -48,30 +46,34 @@ public class MahjongApp {
     }
 
     // Modifies: this
-    // Effects: declares win, display discarded tiles, display current hand, or discards tile based on the user's inputs
-    private void handleInput() {
+    // Effects: prompts user to declares win, display discarded tiles, display current hand, or discards tile
+    private void promptInput() {
         displayCommands();
         String command = scanner.next();
         resetIdList();
+        handleInput(command);
+        if (!(isPlaying) || (hand.getHandLength() == 13)) {
+            return;
+        }
+        promptInput();
+    }
+
+    private void handleInput(String command) {
         if (command.equals("w")) {
             if (declareWin()) {
                 isPlaying = false;
-                return;
             }
         } else if (command.equals("sd")) {
             System.out.println("Discarded Tiles:");
             showHand(discards.getDiscardedTiles());
         } else if (command.equals("h")) {
-            System.out.println("Current Hand:");
+            System.out.println("Current Hand: \n" + );
             showHand(handList);
         } else if (command.equals("d")) {
             discardTileFromHand();
-            return;
-        } else {
-            System.out.println("You did not input one of the keywords! Please try again.");
         }
-        handleInput();
     }
+
 
     // Effects: displays a list of different valid user commands
     private void displayCommands() {
