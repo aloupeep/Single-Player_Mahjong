@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONObject;
+
 // Represents a mahjong tile having an ID,
 // a number, and a suit (type)
 public class Tile {
@@ -46,5 +48,11 @@ public class Tile {
 
     public String getSuit() {
         return this.suit; // stub
+    }
+
+    public JSONObject toJson() {
+        JSONObject tileJson = new JSONObject();
+        tileJson.put("id", id);
+        return tileJson;
     }
 }

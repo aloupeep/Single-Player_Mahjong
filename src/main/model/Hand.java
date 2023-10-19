@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -13,13 +15,18 @@ public class Hand {
     List<Tile> currentHand;
 
 
-    // Effects: creates a starting hand with 13 tiles and sorts
+    // Effects: creates a starting hand with 13 random tiles and sorts
     public Hand() {
         currentHand = new ArrayList<>();
         for (int count = 1; count <= 13; count++) {
             this.drawTile(new Tile(this.produceRandomID()));
             this.sortHandLastTile();
         }
+    }
+
+    // Effects: creates a hand with the given tiles
+    public Hand(List<Tile> tileList) {
+        currentHand = tileList;
     }
 
     // Modifies: this
@@ -105,5 +112,13 @@ public class Hand {
     public int produceRandomID() {
         Random randID = new Random();
         return randID.nextInt(MAX_ID + 1); // stub
+    }
+
+    public JSONArray toJson() {
+        JSONArray handArray = new JSONArray();
+        for (Tile tile: currentHand) {
+            handArray.put(tile.toJson());
+        }
+        return handArray;
     }
 }

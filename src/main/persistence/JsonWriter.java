@@ -9,7 +9,8 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
 // Represents a writer that writes JSON representation of the current mahjong hand to file
-// Citation for this class: JsonSerializationDemo project mentioned in the phase 2 instructions; used it as reference
+// Took inspiration from JsonSerializationDemo document found at
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 public class JsonWriter {
     private static final int TAB = 4;
     private PrintWriter writer;
@@ -48,4 +49,4 @@ public class JsonWriter {
         writer.print(gameString);
     }
 }
-}
+

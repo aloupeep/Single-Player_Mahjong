@@ -1,5 +1,7 @@
 package model;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,4 +27,11 @@ public class DiscardedTiles {
         return this.discardedList; // stub
     }
 
+    public JSONArray toJson() {
+        JSONArray discards = new JSONArray();
+        for (Tile tile: discardedList) {
+            discards.put(tile.toJson());
+        }
+        return discards;
+    }
 }

@@ -4,13 +4,17 @@ import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 // Represents an ongoing single-player mahjong game
-// Citation for this class: JsonSerializationDemo project mentioned in the phase 2 instructions; used it as reference
+// The use of json objects took inspiration from JsonSerializationDemo document found at
+// https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 public class MahjongApp {
+    private static final String JSON_STORE = "./data/mahjongGame.json";
     List<String> handVisual;
     Scanner scanner;
     private JsonWriter jsonWriter;
@@ -24,16 +28,22 @@ public class MahjongApp {
 
     // Requires: User inputs a Boolean
     // Effects: Creates MahjongApp instance and begins new mahjong game
-    public MahjongApp() {
+    public MahjongApp() throws FileNotFoundException {
+        jsonInitialize();
         scanner = new Scanner(System.in);
         scanner.useDelimiter("\n");
         hand = new Hand();
         while (isPlaying) {
             handDrawTileAndSort();
-
             promptInput();
-
         }
+    }
+
+    // Modifies: this
+    // Effects: initializes Json reader and writer
+    private void jsonInitialize() throws FileNotFoundException {
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
     }
 
     // Modifies: this
@@ -58,19 +68,73 @@ public class MahjongApp {
         promptInput();
     }
 
+    // Modifies: this
+    // Effects: handles the user's request based on the input
     private void handleInput(String command) {
         if (command.equals("w")) {
             if (declareWin()) {
+                System.out.println("Congrats! You completed a hand!");
                 isPlaying = false;
             }
         } else if (command.equals("sd")) {
             System.out.println("Discarded Tiles:");
             showHand(discards.getDiscardedTiles());
         } else if (command.equals("h")) {
-            System.out.println("Current Hand: \n" + );
+            System.out.println("Current Hand:");
             showHand(handList);
         } else if (command.equals("d")) {
             discardTileFromHand();
+        } else if (command.equals("l")) {
+            loadGame();
+        } else if (command.equals("e")) {
+            exitGame();
+        } else {
+            System.out.println("Invalid command! Please try again.");
+        }
+    }
+
+
+
+    // MODIFIES: this
+    // EFFECTS: loads workroom from file
+    private void loadGame() {
+        try {
+            hand = jsonReader.readHand();
+            discards = jsonReader.readDiscards();
+            resetHandList();
+            resetIdList();
+            System.out.println("Loaded previous game from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
+        }
+    }
+
+    // EFFECTS: saves the current game or exits the game or continues the game based on input
+    private void exitGame() {
+        System.out.println("press s to save the current game, r to return to the game, and e to exit");
+        String command = scanner.next();
+        if (command.equals("s")) {
+            saveGame();
+        } else if (command.equals("e")) {
+            isPlaying = false;
+            return;
+        } else if (command.equals("r")) {
+            return;
+        } else {
+            System.out.println("Invalid command! Please try again.");
+        }
+        exitGame();
+    }
+
+    // EFFECTS: saves the current game to file
+    private void saveGame() {
+        try {
+            jsonWriter.open();
+            jsonWriter.write(hand, discards);
+            jsonWriter.close();
+            System.out.println("Saved current game to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
         }
     }
 
@@ -78,10 +142,12 @@ public class MahjongApp {
     // Effects: displays a list of different valid user commands
     private void displayCommands() {
         System.out.println("\nValid commands are:");
+        System.out.println("\tl -> loads the most recently saved game");
         System.out.println("\tw -> declares win");
         System.out.println("\tsd -> shows a list of previously discarded tiles");
         System.out.println("\th -> shows your current hand");
         System.out.println("\td -> discards a tile in your hand and end the turn");
+        System.out.println("\te -> exits the game (and can choose to save it)");
     }
 
     // Modifies: this
