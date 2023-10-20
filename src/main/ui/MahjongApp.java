@@ -6,6 +6,7 @@ import persistence.JsonWriter;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -215,13 +216,14 @@ public class MahjongApp {
         String tripleType = scanner.next();
         System.out.println("Type first, second, and third tiles' ID in increasing order (separated by line break)");
         System.out.println(tileIdGuide);
-        int tileID1 = scanner.nextInt();
-        int tileID2 = scanner.nextInt();
-        int tileID3 = scanner.nextInt();
         if (tripleType.equals("sequence")) {
+            int tileID1 = scanner.nextInt();
+            int tileID2 = scanner.nextInt();
+            int tileID3 = scanner.nextInt();
             return checkSequence(tileID1,tileID2,tileID3);
         } else if (tripleType.equals("triple")) {
-            return checkTriple(tileID1,tileID2,tileID3);
+            int tileID1 = scanner.nextInt();
+            return checkTriple(tileID1);
         } else {
             System.out.println("You did not input sequence or triple! Try again");
             return false;
@@ -232,22 +234,12 @@ public class MahjongApp {
     // Requires: tileID1, tileID2, tileID3 are within [0,MAX_ID (from tile class)]
     // Modifies: this
     // Effects: return true if the triple is valid and is in the current hand
-    private Boolean checkTriple(int tileID1, int tileID2, int tileID3) {
+    private Boolean checkTriple(int tileID1) {
         boolean isSuccess = true;
-        if (!((tileID2 == tileID1) && (tileID1 == tileID3))) {
-            isSuccess = false;
-        } else if (idList.contains(tileID1)) {
+        if (Collections.frequency(idList, tileID1) >= 3) {
             idList.remove(Integer.valueOf(tileID1));
-            if (idList.contains(tileID2)) {
-                idList.remove(Integer.valueOf(tileID2));
-                if (idList.contains(tileID3)) {
-                    idList.remove(Integer.valueOf(tileID3));
-                } else {
-                    isSuccess = addTilesBack(tileID1,2);
-                }
-            } else {
-                isSuccess = addTilesBack(tileID1,1);
-            }
+            idList.remove(Integer.valueOf(tileID1));
+            idList.remove(Integer.valueOf(tileID1));
         } else {
             isSuccess = false;
         }
