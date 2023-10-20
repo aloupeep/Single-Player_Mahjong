@@ -16,8 +16,8 @@ public class JsonReaderTest {
     void testReaderNonExistentFile() {
         JsonReader reader = new JsonReader("./data/727WYSI.json");
         try {
-            Hand hand = reader.readHand();
-            DiscardedTiles discards = reader.readDiscards();
+            Hand testHand = reader.readHand();
+            DiscardedTiles testDiscards = reader.readDiscards();
             fail("IOException expected");
         } catch (IOException e) {
             // expected
