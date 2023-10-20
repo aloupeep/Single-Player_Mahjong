@@ -1,5 +1,6 @@
 package model;
 
+import org.json.JSONArray;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
@@ -73,5 +74,27 @@ public class DiscardedTilesTest {
         assertEquals(testTile1, testDiscardsList.get(4));
         assertFalse(testDiscardsList.contains(testTile2));
     }
+
+    @Test
+    public void testToJsonEmpty() {
+        JSONArray discardsJsonArray = testDiscardedTiles.toJson();
+        assertEquals(0, discardsJsonArray.length());
+    }
+
+    @Test
+    public void testToJsonMultiple() {
+        testDiscardedTiles.addTile(testTile2);
+        testDiscardedTiles.addTile(testTile4);
+        testDiscardedTiles.addTile(testTile4);
+        testDiscardedTiles.addTile(testTile1);
+        JSONArray discardsJsonArray = testDiscardedTiles.toJson();
+
+        assertEquals(4, discardsJsonArray.length());
+        assertEquals(testTile2.getID(), discardsJsonArray.getJSONObject(0).getInt("id"));
+        assertEquals(testTile4.getID(), discardsJsonArray.getJSONObject(1).getInt("id"));
+        assertEquals(testTile4.getID(), discardsJsonArray.getJSONObject(2).getInt("id"));
+        assertEquals(testTile1.getID(), discardsJsonArray.getJSONObject(3).getInt("id"));
+    }
+
 
 }

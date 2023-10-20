@@ -1,5 +1,6 @@
 package model;
 
+import org.json.JSONArray;
 import org.junit.jupiter.api.*;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ class HandTest {
     Hand testHandComplete1;
     Hand testHand2;
     Hand testHandComplete2;
+    Hand testHand3;
     List<Tile> handList1;
     List<Tile> handList2;
     Tile testTile1;
@@ -26,6 +28,7 @@ class HandTest {
         testTile2 = new Tile(33);
         testHand1 = new Hand();
         testHand2 = new Hand();
+        testHand3 = new Hand(new ArrayList<>());
         testHandComplete1 = new Hand();
         testHandComplete2 = new Hand();
         testHandComplete1.drawTile(testTile1);
@@ -135,8 +138,26 @@ class HandTest {
         testHand1.drawTile(testTile1);
         testHand2.drawTile(new Tile(1));
         assertFalse(testHand1.isSorted());
-        // note: not considering super small events like all 13 tiles having ID of
+        // note: not considering super improbable events like all 13 tiles having ID of
         // 0 or 1
+    }
+
+    @Test
+    public void testToJsonEmpty() {
+
+        JSONArray handJsonArray = (new Hand(new ArrayList<>())).toJson();
+        assertEquals(0, handJsonArray.length());
+    }
+
+    @Test
+    public void testToJsonMultiple() {
+        handList1 = testHand1.getHand();
+        JSONArray handJsonArray = testHand1.toJson();
+
+        assertEquals(13, handJsonArray.length());
+        for (int i = 0; i < 13; i++) {
+            assertEquals(handList1.get(i).getID(), handJsonArray.getJSONObject(i).getInt("id"));
+        }
     }
 
 

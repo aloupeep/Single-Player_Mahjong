@@ -37,7 +37,6 @@ public class Tile {
         return Integer.toString(this.number) + " " + this.suit; // stub
     }
 
-    // Effects: returns the id of the tile [0,33] based on its number and suit
     public int getID() {
         return this.id; // stub
     }
@@ -50,6 +49,7 @@ public class Tile {
         return this.suit; // stub
     }
 
+    // Effects: returns a Json representation of the tile in id form
     public JSONObject toJson() {
         JSONObject tileJson = new JSONObject();
         tileJson.put("id", id);
