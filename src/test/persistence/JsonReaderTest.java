@@ -9,6 +9,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Test class for the JsonReader class
 // Took inspiration from JsonSerializationDemo document found at
 // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 public class JsonReaderTest {

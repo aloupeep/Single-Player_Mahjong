@@ -16,7 +16,7 @@ public class DiscardedTiles {
     }
 
     // Modifies: this
-    // Effects: adds given tile to list of previously discarded tiles
+    // Effects: adds given tile to the end of the list of previously discarded tiles
     public void addTile(Tile tile) {
         this.discardedList.add(tile);
     }
@@ -27,6 +27,7 @@ public class DiscardedTiles {
         return this.discardedList; // stub
     }
 
+    // Effects: returns a JSONArray representation of the discarded tiles
     public JSONArray toJson() {
         JSONArray discards = new JSONArray();
         for (Tile tile: discardedList) {

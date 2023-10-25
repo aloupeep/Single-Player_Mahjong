@@ -57,7 +57,7 @@ public class MahjongApp {
     }
 
     // Modifies: this
-    // Effects: prompts user to declares win, display discarded tiles, display current hand, or discards tile
+    // Effects: prompts user to input a valid command
     private void promptInput() {
         displayCommands();
         String command = scanner.next();
@@ -172,15 +172,15 @@ public class MahjongApp {
     // Modifies: this
     // Effects: returns true if the declaration of win is valid
     public Boolean declareWin() {
-        int triples = 0;
+        int melds = 0;
         int pairs = 0;
         while (idList.size() > 0) {
             showHandInt(idList);
-            System.out.println("Declare meld (three-tile group), pair, or exit?");
+            System.out.println("Declare sequence, triple, pair, or exit?");
             String type = scanner.next();
-            if (type.equals("meld")) {
-                if (checkThree()) {
-                    triples++;
+            if (type.equals("sequence") || type.equals("triple")) {
+                if (checkThree(type)) {
+                    melds++;
                 }
             } else if (type.equals("pair")) {
                 if (checkPair()) {
@@ -189,28 +189,24 @@ public class MahjongApp {
             } else if (type.equals("exit")) {
                 break;
             } else {
-                System.out.println("you did not input one of the keywords! (meld/pair/exit)");
+                System.out.println("you did not input one of the keywords! (sequence/triple/pair/exit)");
             }
+            System.out.println(melds + " melds and " + pairs + " pairs declared.");
         }
         resetHandList();
-        return ((triples == 4) && (pairs == 1));
+        return ((melds == 4) && (pairs == 1));
     }
 
-    // Requires: user inputs integers in the range [0,MAX_ID (from tile class)] for tileID1 and 2 and 3
-    //           AND user inputs a string for tripleType
+    // Requires: user inputs integer in the range [0,MAX_ID (from tile class)] for tileID1
     // Modifies: this
     // Effects: returns true if user inputs a valid triple that is in the handList
-    private Boolean checkThree() {
-        System.out.println("Do you wish to declare a sequence (in increasing order) or a triple?");
-        String tripleType = scanner.next();
-        System.out.println("Type first, second, and third tiles' ID in increasing order (separated by line break)");
+    private Boolean checkThree(String type) {
+        System.out.println("Type the first tile of your sequence/triple in ID form (type the lowest ID of your meld)");
         System.out.println(tileIdGuide);
-        if (tripleType.equals("sequence")) {
+        if (type.equals("sequence")) {
             int tileID1 = scanner.nextInt();
-            int tileID2 = scanner.nextInt();
-            int tileID3 = scanner.nextInt();
-            return checkSequence(tileID1,tileID2,tileID3);
-        } else if (tripleType.equals("triple")) {
+            return checkSequence(tileID1);
+        } else if (type.equals("triple")) {
             int tileID1 = scanner.nextInt();
             return checkTriple(tileID1);
         } else {
@@ -220,7 +216,7 @@ public class MahjongApp {
     }
 
 
-    // Requires: tileID1, tileID2, tileID3 are within [0,MAX_ID (from tile class)]
+    // Requires: tileID1 is within [0,MAX_ID (from tile class)]
     // Modifies: this
     // Effects: return true if the triple is valid and is in the current hand
     private Boolean checkTriple(int tileID1) {
@@ -231,6 +227,42 @@ public class MahjongApp {
             idList.remove(Integer.valueOf(tileID1));
         } else {
             isSuccess = false;
+            System.out.println("Declaration of triple failed");
+        }
+        return isSuccess;
+    }
+
+    // Requires: tileID1 is within [0,MAX_ID (from tile class)]
+    // Modifies: this
+    // Effects: return true if the sequence is valid and is in the current hand
+    private Boolean checkSequence(int tileID1) {
+        boolean isSuccess = true;
+        if (tileID1 >= 25) {
+            isSuccess = false;
+        } else if ((idList.contains(tileID1)) && (idList.contains(tileID1 + 1)) && (idList.contains(tileID1 + 2))) {
+            idList.remove(Integer.valueOf(tileID1));
+            idList.remove(Integer.valueOf(tileID1 + 1));
+            idList.remove(Integer.valueOf(tileID1 + 2));
+        } else {
+            isSuccess = false;
+            System.out.println("Declaration of sequence failed");
+        }
+        return isSuccess;
+    }
+
+    // Requires: user inputs integer within [0,MAX_ID (from tile class)] when prompted
+    // Modifies: this
+    // Effects: return true if the sequence is valid and is in the current hand
+    private Boolean checkPair() {
+        System.out.println("Type your pair tile in ID form; " + tileIdGuide);
+        int tileID1 = scanner.nextInt();
+        boolean isSuccess = true;
+        if (Collections.frequency(idList, tileID1) >= 2) {
+            idList.remove(Integer.valueOf(tileID1));
+            idList.remove(Integer.valueOf(tileID1));
+        } else {
+            isSuccess = false;
+            System.out.println("Declaration of pair failed");
         }
         return isSuccess;
     }
@@ -244,52 +276,6 @@ public class MahjongApp {
         }
         return false;
     }
-
-
-    // Requires: tileID1, tileID2, tileID3 are within [0,MAX_ID (from tile class)]
-    // Modifies: this
-    // Effects: return true if the sequence is valid and is in the current hand
-    private Boolean checkSequence(int tileID1, int tileID2, int tileID3) {
-        boolean isSuccess = true;
-        if (!((tileID2 - tileID1 == 1) && (tileID3 - tileID2 == 1))) {
-            isSuccess = false;
-        } else if ((tileID1 >= 27) || (tileID2 >= 27) || (tileID3 >= 27)) {
-            isSuccess = false;
-        } else if (((idList.contains(tileID1)) && (idList.contains(tileID2))) && (idList.contains(tileID3))) {
-            idList.remove(Integer.valueOf(tileID1));
-            idList.remove(Integer.valueOf(tileID2));
-            idList.remove(Integer.valueOf(tileID3));
-        } else {
-            isSuccess = false;
-        }
-        return isSuccess;
-    }
-
-    // Requires: user inputs integers within [0,MAX_ID (from tile class)] for tileID1 and 2
-    // Modifies: this
-    // Effects: return true if the sequence is valid and is in the current hand
-    private Boolean checkPair() {
-        System.out.println("Type first tile in ID form; " + tileIdGuide);
-        int tileID1 = scanner.nextInt();
-        System.out.println("Type second tile in ID form; " + tileIdGuide);
-        int tileID2 = scanner.nextInt();
-        boolean isSuccess = true;
-        if (!(tileID2 == tileID1)) {
-            isSuccess = false;
-        } else if (idList.contains(tileID1)) {
-            idList.remove(Integer.valueOf(tileID1));
-            if (idList.contains(tileID2)) {
-                idList.remove(Integer.valueOf(tileID2));
-            } else {
-                isSuccess = addTilesBack(tileID1,1);
-            }
-        } else {
-            isSuccess = false;
-        }
-        return isSuccess;
-    }
-
-
 
     // Modifies: this
     // Effects: prints the current hand (in ID form) as a list of strings

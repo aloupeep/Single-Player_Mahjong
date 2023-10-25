@@ -13,6 +13,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// Test class from the JsonWriter class
 // Took inspiration from JsonSerializationDemo document found at
 // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
 public class JsonWriterTest {
