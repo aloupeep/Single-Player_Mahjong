@@ -49,7 +49,7 @@ public class Tile {
         return this.suit; // stub
     }
 
-    // Effects: returns a Json representation of the tile in id form
+    // Effects: returns a Json representation of the tile (as its id)
     public JSONObject toJson() {
         JSONObject tileJson = new JSONObject();
         tileJson.put("id", id);

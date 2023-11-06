@@ -24,7 +24,7 @@ public class Hand {
         }
     }
 
-    // Effects: creates a hand with the given tiles
+    // Effects: creates a hand with the given list of tiles
     public Hand(List<Tile> tileList) {
         currentHand = tileList;
     }
@@ -92,6 +92,7 @@ public class Hand {
         return currentHand; // stub
     }
 
+    // Effects: returns the current length of the hand
     public int getHandLength() {
         return currentHand.size(); // stub
     }
@@ -114,6 +115,7 @@ public class Hand {
         return randID.nextInt(MAX_ID + 1); // stub
     }
 
+    // Effects: returns a JSONArray representation of the current hand
     public JSONArray toJson() {
         JSONArray handArray = new JSONArray();
         for (Tile tile: currentHand) {

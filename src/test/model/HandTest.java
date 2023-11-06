@@ -10,7 +10,7 @@ import java.util.HashSet;
 import static model.Tile.MAX_ID;
 import static org.junit.jupiter.api.Assertions.*;
 
-// NEED TO ADD ONE MORE TEST WHERE THE isSORTED FAILS!!!
+// A test suite for the hand class
 class HandTest {
     Hand testHand1;
     Hand testHandComplete1;
