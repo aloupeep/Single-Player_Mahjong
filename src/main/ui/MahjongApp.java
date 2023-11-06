@@ -7,6 +7,7 @@ import persistence.JsonWriter;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import java.awt.*;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Collections;
@@ -46,14 +47,14 @@ public class MahjongApp extends JFrame implements ListSelectionListener {
 
     // Modifies: this
     // Effects: initializes Json reader and writer
-    private void jsonInitialize() throws FileNotFoundException {
+    void jsonInitialize() throws FileNotFoundException {
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
     }
 
     // Modifies: this
     // Effects: draws a random tile, sorts the resulting hand, and shows the hand
-    private void handDrawTileAndSort() {
+    void handDrawTileAndSort() {
         hand.drawTile(new Tile(hand.produceRandomID()));
         hand.sortHandLastTile();
         resetHandList();
@@ -62,7 +63,7 @@ public class MahjongApp extends JFrame implements ListSelectionListener {
 
     // Modifies: this
     // Effects: prompts user to input a valid command
-    private void promptInput() {
+    void promptInput() {
         displayCommands();
         String command = scanner.next();
         resetIdList();
@@ -75,7 +76,7 @@ public class MahjongApp extends JFrame implements ListSelectionListener {
 
     // Modifies: this
     // Effects: handles the user's request based on the input
-    private void handleInput(String command) {
+    void handleInput(String command) {
         if (command.equals("w")) {
             if (declareWin()) {
                 System.out.println("Congrats! You completed a hand!");
@@ -100,7 +101,7 @@ public class MahjongApp extends JFrame implements ListSelectionListener {
 
     // MODIFIES: this
     // EFFECTS: loads workroom from file
-    private void loadGame() {
+    void loadGame() {
         try {
             hand = jsonReader.readHand();
             discards = jsonReader.readDiscards();
@@ -113,7 +114,7 @@ public class MahjongApp extends JFrame implements ListSelectionListener {
     }
 
     // EFFECTS: saves the current game or exits the game or continues the game based on input
-    private void exitGame() {
+    void exitGame() {
         System.out.println("press s to save the current game, r to return to the game, and e to exit");
         String command = scanner.next();
         if (command.equals("s")) {
@@ -130,7 +131,7 @@ public class MahjongApp extends JFrame implements ListSelectionListener {
     }
 
     // EFFECTS: saves the current game to file
-    private void saveGame() {
+    void saveGame() {
         try {
             jsonWriter.open();
             jsonWriter.write(hand, discards);
@@ -143,7 +144,7 @@ public class MahjongApp extends JFrame implements ListSelectionListener {
 
 
     // Effects: displays a list of different valid user commands
-    private void displayCommands() {
+    void displayCommands() {
         System.out.println("\nValid commands are:");
         System.out.println("\tl -> loads the most recently saved game");
         System.out.println("\tw -> declares win");
@@ -157,7 +158,7 @@ public class MahjongApp extends JFrame implements ListSelectionListener {
     // Modifies: this
     // Effects: discard the tile corresponding to the ID that the user inputs if it is in the hand
     // if the tile is not in the hand, repeatedly ask for an ID until a valid ID is given
-    private void discardTileFromHand() {
+    void discardTileFromHand() {
         resetIdList();
         System.out.println("Input the ID for the tile you wish to discard");
         System.out.println(tileIdGuide);
@@ -204,7 +205,7 @@ public class MahjongApp extends JFrame implements ListSelectionListener {
     // Requires: user inputs integer in the range [0,MAX_ID (from tile class)] for tileID1
     // Modifies: this
     // Effects: returns true if user inputs a valid triple that is in the handList
-    private Boolean checkThree(String type) {
+    Boolean checkThree(String type) {
         System.out.println("Type the first tile of your sequence/triple in ID form (type the lowest ID of your meld)");
         System.out.println(tileIdGuide);
         if (type.equals("sequence")) {
@@ -223,7 +224,7 @@ public class MahjongApp extends JFrame implements ListSelectionListener {
     // Requires: tileID1 is within [0,MAX_ID (from tile class)]
     // Modifies: this
     // Effects: return true if the triple is valid and is in the current hand
-    private Boolean checkTriple(int tileID1) {
+    Boolean checkTriple(int tileID1) {
         boolean isSuccess = true;
         if (Collections.frequency(idList, tileID1) >= 3) {
             idList.remove(Integer.valueOf(tileID1));
@@ -239,7 +240,7 @@ public class MahjongApp extends JFrame implements ListSelectionListener {
     // Requires: tileID1 is within [0,MAX_ID (from tile class)]
     // Modifies: this
     // Effects: return true if the sequence is valid and is in the current hand
-    private Boolean checkSequence(int tileID1) {
+    Boolean checkSequence(int tileID1) {
         boolean isSuccess = true;
         if (tileID1 >= 25) {
             isSuccess = false;
@@ -257,7 +258,7 @@ public class MahjongApp extends JFrame implements ListSelectionListener {
     // Requires: user inputs integer within [0,MAX_ID (from tile class)] when prompted
     // Modifies: this
     // Effects: return true if the sequence is valid and is in the current hand
-    private Boolean checkPair() {
+    Boolean checkPair() {
         System.out.println("Type your pair tile in ID form; " + tileIdGuide);
         int tileID1 = scanner.nextInt();
         boolean isSuccess = true;
@@ -274,7 +275,7 @@ public class MahjongApp extends JFrame implements ListSelectionListener {
     // Requires: tile is not null
     // Modifies: this
     // Effects: restores the original state of the idList by repeatedly adding tile
-    private Boolean addTilesBack(int tile, int n) {
+    Boolean addTilesBack(int tile, int n) {
         for (int count = 1; count <= n; count++) {
             idList.add(tile);
         }
@@ -305,7 +306,7 @@ public class MahjongApp extends JFrame implements ListSelectionListener {
 
     // Modifies: this
     // Effects: resets the idList to match with the handList
-    private void resetIdList() {
+    void resetIdList() {
         idList = new ArrayList<>();
         for (Tile tile: handList) {
             idList.add(tile.getID());
@@ -314,7 +315,7 @@ public class MahjongApp extends JFrame implements ListSelectionListener {
 
     // Modifies: this
     // Effects: rest the handList to match with the current hand
-    private void resetHandList() {
+    void resetHandList() {
         handList = hand.getHand();
     }
 
