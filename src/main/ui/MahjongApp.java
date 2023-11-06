@@ -4,6 +4,9 @@ import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Collections;
@@ -14,15 +17,16 @@ import java.util.Scanner;
 // Represents an ongoing single-player mahjong game
 // The use of json objects took inspiration from JsonSerializationDemo document found at
 // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
-public class MahjongApp {
-    private static final String JSON_STORE = "./data/mahjongGame.json";
-    List<String> handVisual;
+public class MahjongApp extends JFrame implements ListSelectionListener {
+    protected static final String JSON_STORE = "./data/mahjongGame.json";
+
     Scanner scanner;
-    private JsonWriter jsonWriter;
-    private JsonReader jsonReader;
+    protected JsonWriter jsonWriter;
+    protected JsonReader jsonReader;
     Hand hand;
     List<Tile> handList;
     List<Integer> idList;
+    List<String> handVisual;
     Boolean isPlaying = true;
     DiscardedTiles discards = new DiscardedTiles();
     String tileIdGuide = "1 man = 0, 1 pin = 9, 1 sou = 18, 1 wind = 27, 1 dragon = 31";
@@ -329,5 +333,8 @@ public class MahjongApp {
     }
 
 
+    @Override
+    public void valueChanged(ListSelectionEvent e) {
 
+    }
 }
