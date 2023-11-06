@@ -18,7 +18,7 @@ import java.util.Scanner;
 // Represents an ongoing single-player mahjong game
 // The use of json objects took inspiration from JsonSerializationDemo document found at
 // https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
-public class MahjongApp extends JFrame implements ListSelectionListener {
+public class MahjongApp extends JPanel implements ListSelectionListener {
     protected static final String JSON_STORE = "./data/mahjongGame.json";
 
     Scanner scanner;
