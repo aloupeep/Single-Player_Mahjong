@@ -27,6 +27,15 @@ public class DiscardedTiles {
         return this.discardedList; // stub
     }
 
+    // EFFECTS: returns the list of tiles in discard in string format
+    public String getDiscardedTilesString() {
+        String string = "";
+        for (Tile t : discardedList) {
+            string = string + t.toString();
+        }
+        return string;
+    }
+
     // Effects: returns a JSONArray representation of the discarded tiles
     public JSONArray toJson() {
         JSONArray discards = new JSONArray();

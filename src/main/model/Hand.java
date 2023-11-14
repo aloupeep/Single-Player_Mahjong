@@ -35,6 +35,14 @@ public class Hand {
         currentHand.add(tile);
     }
 
+    // Modifies: this
+    // Effects: Adds random tile to the current hand and returns it
+    public Tile drawRandomTile() {
+        Tile newTile = new Tile(produceRandomID());
+        currentHand.add(newTile);
+        return newTile;
+    }
+
 
     // THIS IS THE METHOD IF I'M ACTUALLY PLANNING TO BUILD A WALL!! BEWARE
     // Modifies: this
@@ -55,7 +63,7 @@ public class Hand {
     }
 
     // Modifies: this
-    // Effects: discards the tile at index of ind of the current hand
+    // Effects: discards the tile at index of ind of the current hand and returns it
     public Tile discardTileIndex(int ind) {
         return currentHand.remove(ind);
     }
@@ -92,6 +100,15 @@ public class Hand {
         return currentHand; // stub
     }
 
+    // EFFECTS: returns the list of tiles in current hand in string format
+    public List<String> getHandString() {
+        List<String> stringList = new ArrayList<>();
+        for (Tile t : currentHand) {
+            stringList.add(t.showTile());
+        }
+        return stringList;
+    }
+
     // Effects: returns the current length of the hand
     public int getHandLength() {
         return currentHand.size(); // stub
@@ -122,5 +139,12 @@ public class Hand {
             handArray.put(tile.toJson());
         }
         return handArray;
+    }
+
+    // NEED TESTING!!!
+    public Tile drawAndSort() {
+        Tile newTile = drawRandomTile();
+        sortHandLastTile();
+        return newTile;
     }
 }

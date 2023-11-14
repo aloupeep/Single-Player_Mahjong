@@ -94,6 +94,8 @@ public class ListDemo extends JPanel
         buttonPane.setBorder(BorderFactory.createEmptyBorder(5,5,5,5));
 
         add(listScrollPane, BorderLayout.CENTER);
+        add(listScrollPane, BorderLayout.CENTER);
+        add(buttonPane, BorderLayout.PAGE_END);
         add(buttonPane, BorderLayout.PAGE_END);
     }
 

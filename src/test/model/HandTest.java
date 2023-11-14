@@ -56,6 +56,14 @@ class HandTest {
     }
 
     @Test
+    public void testDrawRandomTileOnce() {
+        testHand1.drawRandomTile();
+        assertEquals(14, testHand1.getHandLength());
+        testHand3.drawRandomTile();
+        assertEquals(14, testHand3.getHandLength());
+    }
+
+    @Test
     public void testDiscardTileOnce() {
         assertTrue(testHandComplete1.discardTile(testTile1));
         assertTrue(testHandComplete2.discardTile(testTile2));
