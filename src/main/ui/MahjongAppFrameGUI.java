@@ -41,17 +41,7 @@ public class MahjongAppFrameGUI extends JFrame {
     }
 
     public void reload(Hand hand, DiscardedTiles discards) {
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-        // statusLabel = new JLabel(STATUS_OK);
-        // add(statusLabel, BorderLayout.NORTH);
-        // appGUI = new MahjongAppGUI(hand, discards);
-        // discardGUI = appGUI.getDiscardGUI();
         appGUI.loadGameGUI(hand, discards);
-
-        System.out.println("Frame" + appGUI.getHand().getHandString());
-        System.out.println("Frame" + discardGUI.getDiscards().getDiscardedTilesString());
-
 
         //Display the window.
         pack();

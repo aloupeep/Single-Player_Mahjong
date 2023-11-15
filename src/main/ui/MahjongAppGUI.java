@@ -45,11 +45,6 @@ public class MahjongAppGUI extends JPanel implements ListSelectionListener {
         hand.drawAndSort();
         handModel = new DefaultListModel<>();
         handModel.addAll(hand.getHandString());
-        /*for (Tile t : hand.getHand()) {
-            String tileString = t.showTile();
-            handModel.addElement(tileString);
-        }*/
-        System.out.println(handModel);
 
         setupVisuals(false);
         addButtons();
@@ -80,16 +75,12 @@ public class MahjongAppGUI extends JPanel implements ListSelectionListener {
         add(discardButton, BorderLayout.SOUTH);
     }
 
-
-
     public void loadGameGUI(Hand hand, DiscardedTiles discards) {
-        System.out.println("Inside APPGUI" + this.hand.getHandString());
         this.hand = hand;
         this.handModel = new DefaultListModel<>();
         this.handList = new JList<>(handModel);
         handModel.addAll(this.hand.getHandString());
         discardGUI.loadDiscards(discards);
-        System.out.println("Inside APPGUI" + this.handModel.toString());
         setupVisuals(true);
         addButtons();
         repaint();

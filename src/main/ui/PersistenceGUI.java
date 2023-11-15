@@ -76,9 +76,6 @@ public class PersistenceGUI extends JPanel {
             DiscardedTiles newDiscards = jsonReader.readDiscards();
 
             currentFrameGUI.reload(newHand, newDiscards);
-            System.out.println("Persistence" + newDiscards.getDiscardedTilesString());
-            System.out.println("Persistence" + newHand.getHandString());
-
             System.out.println("Loaded previous game from " + JSON_STORE);
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
