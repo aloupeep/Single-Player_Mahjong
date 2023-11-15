@@ -43,6 +43,37 @@ public class DiscardedTilesTest {
     }
 
     @Test
+    public void testRemoveTileIndexOnce() {
+        testDiscardedTiles.addTile(testTile2);
+        testDiscardedTiles.addTile(testTile4);
+        testDiscardedTiles.addTile(testTile3);
+        testDiscardedTiles.addTile(testTile4);
+        testDiscardedTiles.addTile(testTile1);
+        testDiscardsList = testDiscardedTiles.getDiscardedTiles();
+
+        assertEquals(testTile2, testDiscardedTiles.removeDiscardIndex(0));
+        assertEquals(4, testDiscardsList.size());
+    }
+
+    @Test
+    public void testRemoveTileIndexMultiple() {
+        testDiscardedTiles.addTile(testTile2);
+        testDiscardedTiles.addTile(testTile4);
+        testDiscardedTiles.addTile(testTile3);
+        testDiscardedTiles.addTile(testTile4);
+        testDiscardedTiles.addTile(testTile1);
+        testDiscardsList = testDiscardedTiles.getDiscardedTiles();
+
+        assertEquals(testTile4, testDiscardedTiles.removeDiscardIndex(1));
+        assertEquals(4, testDiscardsList.size());
+        assertEquals(testTile3, testDiscardedTiles.removeDiscardIndex(1));
+        assertEquals(testTile1, testDiscardedTiles.removeDiscardIndex(2));
+        assertEquals(testTile2, testDiscardedTiles.removeDiscardIndex(0));
+        assertEquals(testTile4, testDiscardedTiles.removeDiscardIndex(0));
+        assertEquals(0, testDiscardsList.size());
+    }
+
+    @Test
     public void testAddTileMultiple() {
         testDiscardedTiles.addTile(testTile2);
         testDiscardedTiles.addTile(testTile3);

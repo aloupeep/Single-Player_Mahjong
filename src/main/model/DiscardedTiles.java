@@ -27,11 +27,14 @@ public class DiscardedTiles {
         return this.discardedList; // stub
     }
 
+    // Requires: the index provided (i) must be in the range of the discardedList
+    // Modifies: this
+    // Effects: removes the tile at index i of the discardedList and returns it
     public Tile removeDiscardIndex(int i) {
         return discardedList.remove(i);
     }
 
-    // EFFECTS: returns the list of tiles in discard in string format
+    // Effects: returns the list of tiles in current discards as a list of strings
     public List<String> getDiscardedTilesString() {
         List<String> stringList = new ArrayList<>();
         for (Tile t : discardedList) {

@@ -59,8 +59,8 @@ class HandTest {
     public void testDrawRandomTileOnce() {
         testHand1.drawRandomTile();
         assertEquals(14, testHand1.getHandLength());
-        testHand3.drawRandomTile();
-        assertEquals(14, testHand3.getHandLength());
+        testHand2.drawRandomTile();
+        assertEquals(14, testHand2.getHandLength());
     }
 
     @Test

@@ -100,7 +100,7 @@ public class Hand {
         return currentHand; // stub
     }
 
-    // EFFECTS: returns the list of tiles in current hand in string format
+    // Effects: returns the list of tiles in current hand as a list of strings
     public List<String> getHandString() {
         List<String> stringList = new ArrayList<>();
         for (Tile t : currentHand) {
