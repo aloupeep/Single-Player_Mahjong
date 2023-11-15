@@ -27,13 +27,17 @@ public class DiscardedTiles {
         return this.discardedList; // stub
     }
 
+    public Tile removeDiscardIndex(int i) {
+        return discardedList.remove(i);
+    }
+
     // EFFECTS: returns the list of tiles in discard in string format
-    public String getDiscardedTilesString() {
-        String string = "";
+    public List<String> getDiscardedTilesString() {
+        List<String> stringList = new ArrayList<>();
         for (Tile t : discardedList) {
-            string = string + t.toString();
+            stringList.add(t.showTile());
         }
-        return string;
+        return stringList;
     }
 
     // Effects: returns a JSONArray representation of the discarded tiles

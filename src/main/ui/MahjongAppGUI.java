@@ -6,27 +6,28 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.ArrayList;
 
 import model.*;
 
 public class MahjongAppGUI extends JPanel implements ListSelectionListener {
     private static final String STATUS_OK = "Nothing wrong yet";
     private Hand hand;
-    private DiscardedTiles discards;
+
     private JList handList;
     private DefaultListModel handModel;
-    private JList discardList;
-    private DefaultListModel discardsModel;
+
+    private DiscardGUI discardGUI;
 
     private JButton discardButton;
-
     private MahjongApp mahjongApp;
     private JLabel statusLabel;
     private JLabel discardsVisual;
+    private JScrollPane handListScrollPane;
 
     public MahjongAppGUI() {
         super(new BorderLayout());
+        setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        discardGUI = new DiscardGUI();
 
         // setDefaultCloseOperation(EXIT_ON_CLOSE);
 
@@ -39,7 +40,6 @@ public class MahjongAppGUI extends JPanel implements ListSelectionListener {
         setVisible(true);
     }
 
-
     private void createAppGUI() {
         hand = new Hand();
         hand.drawAndSort();
@@ -51,35 +51,25 @@ public class MahjongAppGUI extends JPanel implements ListSelectionListener {
         }*/
         System.out.println(handModel);
 
-        discards = new DiscardedTiles();
-        discardsModel = new DefaultListModel<>();
-
-        setupVisuals();
+        setupVisuals(false);
         addButtons();
     }
 
-    private void setupVisuals() {
+    private void setupVisuals(boolean shouldReset) {
         handList = new JList(handModel);
         handList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         handList.setSelectedIndex(0);
         handList.addListSelectionListener(this);
         handList.setLayoutOrientation(2);
         handList.setVisibleRowCount(1);
-        JScrollPane handListScrollPane = new JScrollPane(handList);
+        handListScrollPane = new JScrollPane(handList);
 
-        discardList = new JList(discardsModel);
-        discardList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        discardList.setSelectedIndex(0);
-        discardList.addListSelectionListener(this);
-        discardList.setLayoutOrientation(2);
-        discardList.setVisibleRowCount(1);
-        JScrollPane discardListScrollPane = new JScrollPane(discardList);
-        discardsVisual = new JLabel(discards.getDiscardedTilesString());
+        if (shouldReset) {
+            this.removeAll();
 
+        }
         add(handListScrollPane, BorderLayout.CENTER);
-        // add(discardsVisual);
-        // DOES NOT WORK IF UNCOMMENT NEXT LINE FOR SOME REASONS
-        // add(discardListScrollPane, BorderLayout.CENTER);
+
     }
 
     private void addButtons() {
@@ -90,6 +80,24 @@ public class MahjongAppGUI extends JPanel implements ListSelectionListener {
         add(discardButton, BorderLayout.SOUTH);
     }
 
+
+
+    public void loadGameGUI(Hand hand, DiscardedTiles discards) {
+        System.out.println("Inside APPGUI" + this.hand.getHandString());
+        this.hand = hand;
+        this.handModel = new DefaultListModel<>();
+        this.handList = new JList<>(handModel);
+        handModel.addAll(this.hand.getHandString());
+        discardGUI.loadDiscards(discards);
+        System.out.println("Inside APPGUI" + this.handModel.toString());
+        setupVisuals(true);
+        addButtons();
+        repaint();
+    }
+
+    public Hand getHand() {
+        return this.hand;
+    }
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
@@ -106,6 +114,10 @@ public class MahjongAppGUI extends JPanel implements ListSelectionListener {
         }
     }
 
+    public DiscardGUI getDiscardGUI() {
+        return discardGUI;
+    }
+
     class DiscardListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             //This method can be called only if
@@ -114,9 +126,7 @@ public class MahjongAppGUI extends JPanel implements ListSelectionListener {
             int index = handList.getSelectedIndex();
             if (handModel.remove(index) != null) {
                 Tile discard = hand.discardTileIndex(index);
-                discards.addTile(discard);
-                discardsVisual = new JLabel(discards.getDiscardedTilesString());
-                discardsModel.addElement(discard.showTile());
+                discardGUI.addDiscard(discard);
             }
             int size = handModel.getSize();
 
