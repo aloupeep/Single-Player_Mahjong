@@ -15,6 +15,8 @@ public class MahjongAppFrameGUI extends JFrame {
     private DiscardGUI discardGUI;
     private JButton checkWinButton;
     private PersistenceGUI persistenceButtonPane;
+    private ImageIcon winImage;
+    private ImageIcon failImage;
 
     public MahjongAppFrameGUI() {
         super("Single-player mahjong");
@@ -31,17 +33,15 @@ public class MahjongAppFrameGUI extends JFrame {
             System.out.println("something went wrong in the initialization of json reader + writer...");
         }
         initializeWin();
-        // appGUI.setOpaque(true); //content panes must be opaque
-        Container container = getContentPane();
+        initializeImage();
 
+        Container container = getContentPane();
 
         container.add(appGUI,BorderLayout.NORTH);
         container.add(statusLabel, BorderLayout.BEFORE_LINE_BEGINS);
         container.add(discardGUI,BorderLayout.CENTER);
         container.add(checkWinButton,BorderLayout.LINE_END);
         container.add(persistenceButtonPane,BorderLayout.PAGE_END);
-
-
 
         //Display the window.
         pack();
@@ -63,13 +63,25 @@ public class MahjongAppFrameGUI extends JFrame {
         checkWinButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 if (handChecker.declareWin(appGUI.getHand())) {
-                    statusLabel.setText("You won!");
+                    remove(statusLabel);
+                    statusLabel = new JLabel(winImage);
+                    add(statusLabel, BorderLayout.BEFORE_LINE_BEGINS);
+
                 } else {
-                    statusLabel.setText("Unsuccessful declaration of win...");
-                    System.out.println("label changed");
+                    remove(statusLabel);
+                    statusLabel = new JLabel(failImage);
+                    add(statusLabel, BorderLayout.BEFORE_LINE_BEGINS);
                 }
                 repaint();
             }
         });
+    }
+
+    private void initializeImage() {
+        String sep = System.getProperty("file.separator");
+        winImage = new ImageIcon(System.getProperty("user.dir") + sep
+                + "data" + sep + "Win Image.jpg");
+        failImage = new ImageIcon(System.getProperty("user.dir") + sep
+                + "data" + sep + "Fail Image.png");
     }
 }

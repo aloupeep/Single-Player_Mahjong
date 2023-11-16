@@ -52,7 +52,6 @@ public class DiscardGUI extends JPanel implements ListSelectionListener {
         discardList.setSelectedIndex(0);
         discardList.addListSelectionListener(this);
         discardList.setLayoutOrientation(2);
-        discardList.setVisibleRowCount(1);
         discardListScrollPane = new JScrollPane(discardList);
         if (shouldReset) {
             this.removeAll();
