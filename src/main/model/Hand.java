@@ -43,6 +43,13 @@ public class Hand {
         return newTile;
     }
 
+    // Modifies: this
+    // Effects: adds a random tile to current hand, sorts the new hand, and returns the tile
+    public Tile drawAndSort() {
+        Tile newTile = drawRandomTile();
+        sortHandLastTile();
+        return newTile;
+    }
 
     // THIS IS THE METHOD IF I'M ACTUALLY PLANNING TO BUILD A WALL!! BEWARE
     // Modifies: this
@@ -141,10 +148,5 @@ public class Hand {
         return handArray;
     }
 
-    // NEED TESTING!!!
-    public Tile drawAndSort() {
-        Tile newTile = drawRandomTile();
-        sortHandLastTile();
-        return newTile;
-    }
+
 }

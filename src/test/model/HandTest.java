@@ -151,6 +151,22 @@ class HandTest {
     }
 
     @Test
+    public void testDrawAndSort() {
+        assertNotEquals(null, testHand1.drawAndSort());
+
+        assertTrue(testHand1.isSorted());
+        assertEquals(14,testHand1.getHandLength());
+    }
+
+    @Test
+    public void testGetHandString() {
+        testHand1.drawTile(testTile1);
+        List<String> handListString = testHand1.getHandString();
+        assertEquals(14, handListString.size());
+        assertEquals("1 man",handListString.get(13));
+    }
+
+    @Test
     public void testToJsonEmpty() {
 
         JSONArray handJsonArray = (new Hand(new ArrayList<>())).toJson();

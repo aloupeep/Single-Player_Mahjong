@@ -10,7 +10,6 @@ import java.awt.event.ActionListener;
 import model.*;
 
 public class MahjongAppGUI extends JPanel implements ListSelectionListener {
-    private static final String STATUS_OK = "Nothing wrong yet";
     private Hand hand;
 
     private JList handList;
@@ -30,9 +29,6 @@ public class MahjongAppGUI extends JPanel implements ListSelectionListener {
         discardGUI = new DiscardGUI();
 
         // setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-        statusLabel = new JLabel(STATUS_OK);
-        add(statusLabel, BorderLayout.NORTH);
 
         // Create the intersection and GUI for intersection
         createAppGUI();

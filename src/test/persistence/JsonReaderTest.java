@@ -54,7 +54,7 @@ public class JsonReaderTest {
             List<Tile> discardsList = discards.getDiscardedTiles();
             assertEquals(14, discardsList.size());
             for (int index = 0; index < 14; index++) {
-                assertEquals(2*index,handList.get(index).getID());
+                assertEquals(2*index,discardsList.get(index).getID());
             }
 
         } catch (IOException e) {

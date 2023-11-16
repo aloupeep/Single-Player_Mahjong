@@ -107,6 +107,21 @@ public class DiscardedTilesTest {
     }
 
     @Test
+    public void testGetDiscardedTilesString() {
+        testDiscardedTiles.addTile(testTile2);
+        testDiscardedTiles.addTile(testTile3);
+        testDiscardedTiles.addTile(testTile4);
+        testDiscardedTiles.addTile(testTile1);
+        List<String> testDiscardsStringList = testDiscardedTiles.getDiscardedTilesString();
+
+        assertEquals(4, testDiscardsStringList.size());
+        assertEquals(testTile2.showTile(), testDiscardsStringList.get(0));
+        assertEquals(testTile3.showTile(), testDiscardsStringList.get(1));
+        assertEquals(testTile4.showTile(), testDiscardsStringList.get(2));
+        assertEquals(testTile1.showTile(), testDiscardsStringList.get(3));
+    }
+
+    @Test
     public void testToJsonEmpty() {
         JSONArray discardsJsonArray = testDiscardedTiles.toJson();
         assertEquals(0, discardsJsonArray.length());
