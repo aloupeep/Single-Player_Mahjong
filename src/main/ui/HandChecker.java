@@ -41,7 +41,6 @@ public class HandChecker {
 
     private LinkedHashMap<List<Integer>, Integer> getNextValidStates(List<Integer> idList, int pair) {
         LinkedHashMap<List<Integer>, Integer> nextStates = new LinkedHashMap<>();
-        List<Integer> idListBackup = clone(idList);
 
         try {
             nextStates.put(removeTriple(idList), pair);

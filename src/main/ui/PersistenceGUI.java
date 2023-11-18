@@ -11,7 +11,9 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-
+// The design of this GUI took inspiration from the ListDemo project from the java tutorial series that can be found at
+// https://docs.oracle.com/javase/tutorial/uiswing/examples/components/ and the C3 Lecture Lab starter regarding traffic
+// lights that can be found at https://github.students.cs.ubc.ca/CPSC210/C3-LectureLabStarter.
 public class PersistenceGUI extends JPanel {
     protected static final String JSON_STORE = "./data/mahjongGame.json";
 
@@ -22,6 +24,7 @@ public class PersistenceGUI extends JPanel {
     private JButton saveButton;
     private JButton loadButton;
 
+    // Effects: initializes the GUI for functionality relating to persistence
     public PersistenceGUI(MahjongAppFrameGUI currentFrameGUI, MahjongAppGUI appGUI) throws FileNotFoundException {
         super(new BorderLayout());
         this.currentFrameGUI = currentFrameGUI;

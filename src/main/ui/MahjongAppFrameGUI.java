@@ -8,6 +8,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+// The design of this GUI took inspiration from the ListDemo project from the java tutorial series that can be found at
+// https://docs.oracle.com/javase/tutorial/uiswing/examples/components/ and the C3 Lecture Lab starter regarding traffic
+// lights that can be found at https://github.students.cs.ubc.ca/CPSC210/C3-LectureLabStarter.
 public class MahjongAppFrameGUI extends JFrame {
     private static final String STATUS_OK = "Nothing wrong yet";
     private JLabel statusLabel;
@@ -18,12 +21,12 @@ public class MahjongAppFrameGUI extends JFrame {
     private ImageIcon winImage;
     private ImageIcon failImage;
 
+    // Effects: initializes the frame for the GUI
     public MahjongAppFrameGUI() {
         super("Single-player mahjong");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         statusLabel = new JLabel(STATUS_OK);
-
 
         appGUI = new MahjongAppGUI();
         discardGUI = appGUI.getDiscardGUI();
@@ -48,6 +51,8 @@ public class MahjongAppFrameGUI extends JFrame {
         setVisible(true);
     }
 
+    // Modifies: this
+    // Effects: resets the current hand and discarded tile
     public void reload(Hand hand, DiscardedTiles discards) {
         appGUI.loadGameGUI(hand, discards);
 
@@ -56,6 +61,8 @@ public class MahjongAppFrameGUI extends JFrame {
         setVisible(true);
     }
 
+    // Modifies: this
+    // Effects: initializes the declare win button's appearance and effects
     private void initializeWin() {
         HandChecker handChecker = new HandChecker();
         checkWinButton = new JButton("Declare Win");
@@ -77,10 +84,12 @@ public class MahjongAppFrameGUI extends JFrame {
         });
     }
 
+    // Modifies: this
+    // Effects: initializes the image fields with the correct images
     private void initializeImage() {
         String sep = System.getProperty("file.separator");
         winImage = new ImageIcon(System.getProperty("user.dir") + sep
-                + "data" + sep + "Win Image.jpg");
+                + "data" + sep + "Win Image.png");
         failImage = new ImageIcon(System.getProperty("user.dir") + sep
                 + "data" + sep + "Fail Image.png");
     }

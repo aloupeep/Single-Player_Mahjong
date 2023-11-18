@@ -9,33 +9,31 @@ import java.awt.event.ActionListener;
 
 import model.*;
 
+// The design of this GUI took inspiration from the ListDemo project from the java tutorial series that can be found at
+// https://docs.oracle.com/javase/tutorial/uiswing/examples/components/ and the C3 Lecture Lab starter regarding traffic
+// lights that can be found at https://github.students.cs.ubc.ca/CPSC210/C3-LectureLabStarter.
 public class MahjongAppGUI extends JPanel implements ListSelectionListener {
     private Hand hand;
-
     private JList handList;
     private DefaultListModel handModel;
 
     private DiscardGUI discardGUI;
 
     private JButton discardButton;
-    private MahjongApp mahjongApp;
-    private JLabel statusLabel;
-    private JLabel discardsVisual;
     private JScrollPane handListScrollPane;
 
+    // Effects: initializes the panel for displaying the current hand
     public MahjongAppGUI() {
         super(new BorderLayout());
         setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         discardGUI = new DiscardGUI();
 
-        // setDefaultCloseOperation(EXIT_ON_CLOSE);
-
-        // Create the intersection and GUI for intersection
         createAppGUI();
-        // pack();
         setVisible(true);
     }
 
+    // Modifies: this
+    // Effects: initializes the hand for display
     private void createAppGUI() {
         hand = new Hand();
         hand.drawAndSort();
@@ -46,6 +44,9 @@ public class MahjongAppGUI extends JPanel implements ListSelectionListener {
         addButtons();
     }
 
+    // Modifies: this
+    // Effects: sets up handList and the scroll pane for selection of tile in hand
+    //          resets the current scroll pane if shouldReset is true; does not reset otherwise
     private void setupVisuals(boolean shouldReset) {
         handList = new JList(handModel);
         handList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -63,6 +64,8 @@ public class MahjongAppGUI extends JPanel implements ListSelectionListener {
 
     }
 
+    // Modifies: this
+    // Effects: initializes and adds buttons the to the panel
     private void addButtons() {
         discardButton = new JButton("Discard");
         discardButton.setActionCommand("discard");
@@ -71,6 +74,9 @@ public class MahjongAppGUI extends JPanel implements ListSelectionListener {
         add(discardButton, BorderLayout.SOUTH);
     }
 
+    // Modifies: this
+    // Effects: loads the given hand and discard into the current GUI;
+    //          in other words, replace the current hand and discards with the new ones given
     public void loadGameGUI(Hand hand, DiscardedTiles discards) {
         this.hand = hand;
         this.handModel = new DefaultListModel<>();
@@ -82,20 +88,19 @@ public class MahjongAppGUI extends JPanel implements ListSelectionListener {
         repaint();
     }
 
-    public Hand getHand() {
-        return this.hand;
-    }
-
+    // Modifies: this
+    // Effects: enables the discard button if value is changed to a valid index (not -1)
+    //          disables discard button otherwise
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (e.getValueIsAdjusting() == false) {
 
             if (handList.getSelectedIndex() == -1) {
-                //No selection, disable fire button.
+                //No selection, disable discard button.
                 discardButton.setEnabled(false);
 
             } else {
-                //Selection, enable the fire button.
+                //Selection, enable the discard button.
                 discardButton.setEnabled(true);
             }
         }
@@ -105,7 +110,16 @@ public class MahjongAppGUI extends JPanel implements ListSelectionListener {
         return discardGUI;
     }
 
+    public Hand getHand() {
+        return this.hand;
+    }
+
     class DiscardListener implements ActionListener {
+        // Requires: handList.getSelectedIndex() is not -1
+        // Modifies: this
+        // Effects: removes the selected tile from hand and adjusts the new selected index
+        //          as necessary; then draws a new tile to simulate a new turn beginning;
+
         public void actionPerformed(ActionEvent e) {
             //This method can be called only if
             //there's a valid selection
