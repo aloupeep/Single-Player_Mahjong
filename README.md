@@ -26,12 +26,26 @@ attempt to capture the multiplayer aspect of mahjong, hence my proposal of a sin
 and draw one tile at the beginning of each turn
 - As a user, I want to be able to discard one tile in my hand and add it to a list of previously 
 discarded tiles of arbitrary size after drawing one tile to end the current turn
+- As a user, I want to be able to remove one tile from my discards and send it to the shadow realm 
+an arbitrary number of times during my turn
 - As a user, I want to be able to view the list of previously discarded tiles during any turn.
 - As a user, I want to be able to view my current hand when I'm declaring a win or
 drawing/discarding a tile.
 - As a user, I want to be able to declare that the hand is completed manually.
 - As a user, I want to be able to close and save a game at any time to come back to it later
 - As a user, I want to be able to reload a previous game when starting the mahjong application
+
+## Instructions for Grader
+- To add a discard to the list of previously discarded tiles, select any tile from the current hand
+and press the "discard" button
+- To remove a discard from the list of previously discarded tiles, select any tile from the current
+discards and press the "remove discard" button
+- For the visual component added to my project, press the declare win button; after
+minimizing and maximizing the window again, the fail image will most probably appear, which is a sign
+that the declaration of win has failed (if you are curious about the win image, just load the previous
+hand; the saved hand is a valid winning hand).
+- To save the state of the mahjong game, press the save button at the bottom of the screen (most probably)
+- To reload the state of a saved mahjong game, press the load button at the bottom of the screen
 
 
 

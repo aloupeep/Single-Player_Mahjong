@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+// Represents the button panel dealing with persistence-related functionality
 // The design of this GUI took inspiration from the ListDemo project from the java tutorial series that can be found at
 // https://docs.oracle.com/javase/tutorial/uiswing/examples/components/ and the C3 Lecture Lab starter regarding traffic
 // lights that can be found at https://github.students.cs.ubc.ca/CPSC210/C3-LectureLabStarter.
@@ -51,6 +52,8 @@ public class PersistenceGUI extends JPanel {
         setVisible(true);
     }
 
+    // Modifies: this
+    // Effects: adds the save and load button to the GUI
     private void setupVisuals() {
 
         add(saveButton, BorderLayout.LINE_START);

@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+// Represents the main frame of the GUI
 // The design of this GUI took inspiration from the ListDemo project from the java tutorial series that can be found at
 // https://docs.oracle.com/javase/tutorial/uiswing/examples/components/ and the C3 Lecture Lab starter regarding traffic
 // lights that can be found at https://github.students.cs.ubc.ca/CPSC210/C3-LectureLabStarter.
@@ -79,6 +80,7 @@ public class MahjongAppFrameGUI extends JFrame {
                     statusLabel = new JLabel(failImage);
                     add(statusLabel, BorderLayout.BEFORE_LINE_BEGINS);
                 }
+                statusLabel.setVisible(true);
                 repaint();
             }
         });

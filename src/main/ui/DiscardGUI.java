@@ -11,6 +11,10 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+// Represents the panel showing the current discards and deals with removing discards
+// The design of this GUI took inspiration from the ListDemo project from the java tutorial series that can be found at
+// https://docs.oracle.com/javase/tutorial/uiswing/examples/components/ and the C3 Lecture Lab starter regarding traffic
+// lights that can be found at https://github.students.cs.ubc.ca/CPSC210/C3-LectureLabStarter.
 public class DiscardGUI extends JPanel implements ListSelectionListener {
     private DiscardedTiles discards;
     private JList discardList;
@@ -19,6 +23,7 @@ public class DiscardGUI extends JPanel implements ListSelectionListener {
 
     private JButton removeDiscardButton;
 
+    // Effects: Initializes a new discard GUI with no discards
     public DiscardGUI() {
         super(new BorderLayout());
 
@@ -28,6 +33,8 @@ public class DiscardGUI extends JPanel implements ListSelectionListener {
         setVisible(true);
     }
 
+    // Modifies: this
+    // Effects: replaces the current discarded tiles displayed with the ones given
     public void loadDiscards(DiscardedTiles discards) {
         this.discards = discards;
         discardsModel = new DefaultListModel<>();
@@ -36,7 +43,8 @@ public class DiscardGUI extends JPanel implements ListSelectionListener {
         addButtons();
     }
 
-
+    // Modifies: this
+    // Effects: initializes the discards and adds the buttons
     private void createAppGUI() {
         discards = new DiscardedTiles();
         discardsModel = new DefaultListModel<>();
@@ -45,6 +53,9 @@ public class DiscardGUI extends JPanel implements ListSelectionListener {
         addButtons();
     }
 
+    // Modifies: this
+    // Effects: if shouldReset, remove the current display and replace it with an updated display
+    // otherwise, adds the new scroll pane to the display
     private void setupVisuals(boolean shouldReset) {
 
         discardList = new JList(discardsModel);
@@ -60,6 +71,8 @@ public class DiscardGUI extends JPanel implements ListSelectionListener {
 
     }
 
+    // Modifies: this
+    // Effects: initializes and adds the remove discard button
     private void addButtons() {
         removeDiscardButton = new JButton("Remove discard");
         removeDiscardButton.setActionCommand("remove discard");
@@ -69,6 +82,8 @@ public class DiscardGUI extends JPanel implements ListSelectionListener {
         add(removeDiscardButton, BorderLayout.SOUTH);
     }
 
+    // Modifies: this
+    // Effects: adds the given tile to the current discards; updates display accordingly
     public void addDiscard(Tile tile) {
         discardsModel.addElement(tile.showTile());
         discards.addTile(tile);
@@ -78,6 +93,9 @@ public class DiscardGUI extends JPanel implements ListSelectionListener {
         return this.discards;
     }
 
+    // Modifies: this
+    // Effects: enables the remove discard button if value is changed to a valid index (not -1)
+    //          disables remove discard button otherwise
     @Override
     public void valueChanged(ListSelectionEvent e) {
         if (e.getValueIsAdjusting() == false) {
@@ -93,7 +111,13 @@ public class DiscardGUI extends JPanel implements ListSelectionListener {
         }
     }
 
+    // Represents ActionListener for the remove discard button
     class RemoveDiscardListener implements ActionListener {
+
+        // Requires: discardList.getSelectedIndex() is not -1
+        // Modifies: this
+        // Effects: removes the selected tile from discards and adjusts the new selected index
+        //          if necessary
         public void actionPerformed(ActionEvent e) {
             //This method can be called only if
             //there's a valid selection
@@ -105,7 +129,7 @@ public class DiscardGUI extends JPanel implements ListSelectionListener {
             }
             int size = discardsModel.getSize();
 
-            if (index == discardsModel.getSize()) {
+            if (index == size) {
                 //removed item in last position
                 index--;
             }

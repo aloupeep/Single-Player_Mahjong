@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 
 import model.*;
 
+// Represents the panel for the hand display and discard portion of the GUI
 // The design of this GUI took inspiration from the ListDemo project from the java tutorial series that can be found at
 // https://docs.oracle.com/javase/tutorial/uiswing/examples/components/ and the C3 Lecture Lab starter regarding traffic
 // lights that can be found at https://github.students.cs.ubc.ca/CPSC210/C3-LectureLabStarter.
@@ -114,12 +115,13 @@ public class MahjongAppGUI extends JPanel implements ListSelectionListener {
         return this.hand;
     }
 
+    // Represents ActionListener for the discard button
     class DiscardListener implements ActionListener {
+
         // Requires: handList.getSelectedIndex() is not -1
         // Modifies: this
         // Effects: removes the selected tile from hand and adjusts the new selected index
-        //          as necessary; then draws a new tile to simulate a new turn beginning;
-
+        //          if necessary; then draws a new tile to simulate a new turn beginning;
         public void actionPerformed(ActionEvent e) {
             //This method can be called only if
             //there's a valid selection
@@ -131,7 +133,7 @@ public class MahjongAppGUI extends JPanel implements ListSelectionListener {
             }
             int size = handModel.getSize();
 
-            if (index == handModel.getSize()) {
+            if (index == size) {
                 //removed item in last position
                 index--;
             }
