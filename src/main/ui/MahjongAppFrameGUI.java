@@ -1,18 +1,21 @@
 package ui;
 
 import model.*;
+import model.Event;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.IOException;
 
 // Represents the main frame of the GUI
 // The design of this GUI took inspiration from the ListDemo project from the java tutorial series that can be found at
 // https://docs.oracle.com/javase/tutorial/uiswing/examples/components/ and the C3 Lecture Lab starter regarding traffic
 // lights that can be found at https://github.students.cs.ubc.ca/CPSC210/C3-LectureLabStarter.
-public class MahjongAppFrameGUI extends JFrame {
+public class MahjongAppFrameGUI extends JFrame implements WindowListener {
     private static final String STATUS_OK = "Nothing wrong yet";
     private JLabel statusLabel;
     private MahjongAppGUI appGUI;
@@ -38,7 +41,8 @@ public class MahjongAppFrameGUI extends JFrame {
         }
         initializeWin();
         initializeImage();
-
+        addWindowListener(this);
+        System.out.println("added window listener");
         Container container = getContentPane();
 
         container.add(appGUI,BorderLayout.NORTH);
@@ -94,5 +98,43 @@ public class MahjongAppFrameGUI extends JFrame {
                 + "data" + sep + "Win Image.png");
         failImage = new ImageIcon(System.getProperty("user.dir") + sep
                 + "data" + sep + "Fail Image.png");
+    }
+
+    // Specified by the interface WindowListener
+    @Override
+    public void windowOpened(WindowEvent e) {
+    }
+
+    // Effects: print the event log into the console upon closing the game window
+    @Override
+    public void windowClosing(WindowEvent e) {
+        for (Event next : EventLog.getInstance()) {
+            System.out.println(next.toString());
+        }
+    }
+
+    // Specified by the interface WindowListener
+    @Override
+    public void windowClosed(WindowEvent e) {
+    }
+
+    // Specified by the interface WindowListener
+    @Override
+    public void windowIconified(WindowEvent e) {
+    }
+
+    // Specified by the interface WindowListener
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+    }
+
+    // Specified by the interface WindowListener
+    @Override
+    public void windowActivated(WindowEvent e) {
+    }
+
+    // Specified by the interface WindowListener
+    @Override
+    public void windowDeactivated(WindowEvent e) {
     }
 }

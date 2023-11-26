@@ -18,6 +18,7 @@ public class DiscardedTiles {
     // Modifies: this
     // Effects: adds given tile to the end of the list of previously discarded tiles
     public void addTile(Tile tile) {
+        EventLog.getInstance().logEvent(new Event("Tile added to discards"));
         this.discardedList.add(tile);
     }
 
@@ -31,6 +32,7 @@ public class DiscardedTiles {
     // Modifies: this
     // Effects: removes the tile at index i of the discardedList and returns it
     public Tile removeDiscardIndex(int i) {
+        EventLog.getInstance().logEvent(new Event("Discard Tile removed"));
         return discardedList.remove(i);
     }
 

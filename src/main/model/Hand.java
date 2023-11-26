@@ -72,6 +72,7 @@ public class Hand {
     // Modifies: this
     // Effects: discards the tile at index of ind of the current hand and returns it
     public Tile discardTileIndex(int ind) {
+        // EventLog.getInstance().logEvent(new Event("Tile Discarded (added to discards)"));
         return currentHand.remove(ind);
     }
 
