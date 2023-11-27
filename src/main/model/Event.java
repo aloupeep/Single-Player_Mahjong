@@ -41,6 +41,8 @@ public class Event {
         return description;
     }
 
+    // Effects: returns true if the given object is an event that has the same data logged and the same description
+    //          as this event; returns false otherwise
     @Override
     public boolean equals(Object other) {
         if (other == null) {
@@ -54,11 +56,13 @@ public class Event {
         return (this.dateLogged.equals(otherEvent.dateLogged) && this.description.equals(otherEvent.description));
     }
 
+    // Effects: returns a new definition of hash code
     @Override
     public int hashCode() {
         return (HASH_CONSTANT * dateLogged.hashCode() + description.hashCode());
     }
 
+    // Effects: returns the event in the format of a string containing both the date and the description
     @Override
     public String toString() {
         return dateLogged.toString() + "\n" + description;
