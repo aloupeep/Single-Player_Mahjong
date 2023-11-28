@@ -47,5 +47,31 @@ hand; the saved hand is a valid winning hand).
 - To save the state of the mahjong game, press the save button at the bottom of the screen (most probably)
 - To reload the state of a saved mahjong game, press the load button at the bottom of the screen
 
+## Phase 4: Task 2
+Mon Nov 27 21:04:25 PST 2023\
+Tile added to discards\
+Mon Nov 27 21:04:25 PST 2023\
+Tile added to discards\
+Mon Nov 27 21:04:28 PST 2023\
+Discard Tile removed\
+Mon Nov 27 21:04:29 PST 2023\
+Tile added to discards\
+Mon Nov 27 21:04:29 PST 2023\
+Tile added to discards\
+Mon Nov 27 21:04:31 PST 2023\
+Discard Tile removed
 
+## Phase 4: Task 3
+If I had more time to work on the project, one potential improvement would be to reduce the number of associations and
+thus reduce the coupling between some different classes. For example, both the MahjongAppGUI and the MahjongAppFrameGUI
+has a field of DiscardGUI, while MahjongAppFrameGUI also has a field of MahjongAppGUI. This suggests that at least one
+of the associations arrows can be broken without changing the functionality of the program. Another potential improvement
+would be to apply the Singleton pattern on the JsonReader and the JsonWriter classes since with the current state of my
+program, only one instance of either class is needed since they have static behaviour that does not change no matter 
+what class may have a field of it. One additional possible refactoring is to apply the Observer pattern on the EventLog
+class. To be more specific, since the EventLog class is "observing", in other words, changing with respect to, the Hand
+class and the DiscardedTiles class, I can potentially make a new class named Observable or Subject with both Hand and
+DiscardedTiles extending it, and a new Observer interface with the EventLog implementing. Although that may seem
+unnecessary for my current state of the program, applying the pattern will reduce coupling and give more flexibility for
+potential additional features added in the future. 
 

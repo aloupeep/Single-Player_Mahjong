@@ -20,6 +20,7 @@ public class Event {
      * and the current date/time stamp.
      * @param description  a description of the event
      */
+    // Effects: creates an event with the current time as its date and the given description
     public Event(String description) {
         dateLogged = Calendar.getInstance().getTime();
         this.description = description;

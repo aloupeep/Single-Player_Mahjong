@@ -42,7 +42,6 @@ public class MahjongAppFrameGUI extends JFrame implements WindowListener {
         initializeWin();
         initializeImage();
         addWindowListener(this);
-        System.out.println("added window listener");
         Container container = getContentPane();
 
         container.add(appGUI,BorderLayout.NORTH);
